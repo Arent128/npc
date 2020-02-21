@@ -97,7 +97,7 @@ def load_json(filename):
         # Now fix arrays/lists [] and return the result
         return trailing_array_commas_re.sub("]", objects_fixed)
 
-    with open(filename) as json_file:
+    with filename.open() as json_file:
         content = ''.join(json_file.readlines())
         content = remove_comments(content) # Remove comments
         content = remove_trailing_commas(content) # Remove trailing commas
