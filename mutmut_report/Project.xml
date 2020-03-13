@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
-<testsuites failures="94" errors="0" tests="3141" disabled="0" time="0.0">
-	<testsuite name="mutmut" disabled="0" failures="94" errors="0" skipped="0" time="0" tests="3141">
+<testsuites failures="97" errors="0" tests="3141" disabled="0" time="0.0">
+	<testsuite name="mutmut" disabled="0" failures="97" errors="0" skipped="0" time="0" tests="3141">
 		<testcase name="Mutant #1" file="npc/parser.py" line="14">
 			<system-out>VALID_EXTENSIONS = ('.nwod', '.dnd3', '.dfrpg')</system-out>
 		</testcase>
@@ -113,6 +113,18 @@
 			<system-out>        ignore_paths[:] = [path.normpath(d) for d in ignore_paths]</system-out>
 		</testcase>
 		<testcase name="Mutant #18" file="npc/parser.py" line="45">
+			<failure type="failure" message="bad_survived">--- npc/parser.py
++++ npc/parser.py
+@@ -43,7 +43,7 @@
+ 
+     return itertools.chain.from_iterable((_parse_path(path, ignore_paths) for path in search_paths))
+ 
+-def _parse_path(start_path, ignore_paths=None, include_bare=False):
++def _parse_path(start_path, ignore_paths=None, include_bare=True):
+     &quot;&quot;&quot;
+     Parse all the character files under a directory
+ 
+</failure>
 			<system-out>def _parse_path(start_path, ignore_paths=None, include_bare=False):</system-out>
 		</testcase>
 		<testcase name="Mutant #19" file="npc/parser.py" line="62">
@@ -152,9 +164,33 @@
 			<system-out>            if ext in VALID_EXTENSIONS or (include_bare and not ext):</system-out>
 		</testcase>
 		<testcase name="Mutant #27" file="npc/parser.py" line="73">
+			<failure type="failure" message="bad_survived">--- npc/parser.py
++++ npc/parser.py
+@@ -71,7 +71,7 @@
+                 # skip ignored files
+                 continue
+             _, ext = path.splitext(name)
+-            if ext in VALID_EXTENSIONS or (include_bare and not ext):
++            if ext in VALID_EXTENSIONS or (include_bare and  ext):
+                 data = parse_character(target_path)
+                 characters.append(data)
+     return characters
+</failure>
 			<system-out>            if ext in VALID_EXTENSIONS or (include_bare and not ext):</system-out>
 		</testcase>
 		<testcase name="Mutant #28" file="npc/parser.py" line="73">
+			<failure type="failure" message="bad_survived">--- npc/parser.py
++++ npc/parser.py
+@@ -71,7 +71,7 @@
+                 # skip ignored files
+                 continue
+             _, ext = path.splitext(name)
+-            if ext in VALID_EXTENSIONS or (include_bare and not ext):
++            if ext in VALID_EXTENSIONS or (include_bare or not ext):
+                 data = parse_character(target_path)
+                 characters.append(data)
+     return characters
+</failure>
 			<system-out>            if ext in VALID_EXTENSIONS or (include_bare and not ext):</system-out>
 		</testcase>
 		<testcase name="Mutant #29" file="npc/parser.py" line="73">

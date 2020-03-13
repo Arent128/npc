@@ -80,6 +80,10 @@ class TestTags:
     @pytest.fixture
     def basic_character(self, character):
         return character('Basic.nwod')
+    
+    @pytest.fixture
+    def mutant_tests_character(self, character):
+        return character('Jerry.nwod')
 
     def test_simple_tag(self, basic_character):
         """Tags should be added by name"""
@@ -93,6 +97,14 @@ class TestTags:
         """Tags with no data should be added"""
         assert 'skip' in basic_character.tags
 
+    #MUTANT TEST
+    def test_description_tag(self, basic_character):
+        assert 'description' in basic_character.tags
+    
+    def test_line_empty(self, mutant_tests_character):
+        """@realname should overwrite the first name entry"""
+        assert mutant_tests_character.tags('description') == []
+    
     def test_comment(self, basic_character):
         assert '#comment' not in basic_character.tags
 
@@ -175,10 +187,21 @@ class TestMutations:
         testPath = fixture_dir('parsing', 'characters', 'Changelings')
         characters = npc.parser.get_characters(search_paths=[parseables], ignore_paths=[testPath])
         assert len(list(characters)) == 7
-    def test_no_ext(self):
+
+    def test_invaild_extension_with_bare_true(self):
         #search_paths = []
-        parseables = fixture_dir('parsing', 'characters', 'Changelings', 'Frank Dickens.jrg')
+        parseables = fixture_dir('parsing', 'characters', 'Changelings')
         testPath = fixture_dir('parsing', 'characters', 'Goblins')
         search_paths=[parseables]
         characters = list(itertools.chain.from_iterable((npc.parser._parse_path(path, ignore_paths=[], include_bare=True) for path in search_paths)))
-        assert characters[0].tags('name')[0] == 'Frank Dickens'
+        assert len(list(characters)) == 8
+
+    def test_invaild_extension_with_bare_false(self):
+        #search_paths = []
+        parseables = fixture_dir('parsing', 'characters', 'Changelings')
+        testPath = fixture_dir('parsing', 'characters', 'Goblins')
+        search_paths=[parseables]
+        characters = list(itertools.chain.from_iterable((npc.parser._parse_path(path, ignore_paths=[]) for path in search_paths)))
+        for c in characters:
+            assert 'Urgesh' not in c.tags['name']
+
