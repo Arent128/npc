@@ -98,12 +98,16 @@ class TestTags:
         assert 'skip' in basic_character.tags
 
     #MUTANT TEST
+    #Tests the mutant that alters the tag decription 
+    #
     def test_description_tag(self, basic_character):
         assert 'description' in basic_character.tags
-    
-    def test_line_empty(self, mutant_tests_character):
-        """@realname should overwrite the first name entry"""
-        assert mutant_tests_character.tags('description') == []
+#    # Test to see if it kills a mutant that altered the way empty lines
+#    # were inserted into the discription
+#    def test_line_empty(self, mutant_tests_character):
+#        """@realname should overwrite the first name entry"""
+#        assert mutant_tests_character.tags('description') == []
+    #END OF MUTANT TEST
     
     def test_comment(self, basic_character):
         assert '#comment' not in basic_character.tags
@@ -182,12 +186,19 @@ class TestHiding:
         assert c.tags('group').subtag('Seamen').hidden_values == ['Rower']
     
 class TestMutations:
+    # This test kills the mutations dealing  with the pasrsers support
+    # of valid extentions
+    # This should be killing mutants 1 - 4 on mutmut, which changes
+    # the valid extention types
     def test_ignore_type(self):
         parseables = fixture_dir('parsing', 'characters', 'Changelings')
         testPath = fixture_dir('parsing', 'characters', 'Changelings')
         characters = npc.parser.get_characters(search_paths=[parseables], ignore_paths=[testPath])
         assert len(list(characters)) == 7
 
+    # This test kills the mutation dealing with the parsing of files
+    # that do not have a extention to the filename
+    # kills 27 in mutmut
     def test_invaild_extension_with_bare_true(self):
         #search_paths = []
         parseables = fixture_dir('parsing', 'characters', 'Changelings')
@@ -196,6 +207,8 @@ class TestMutations:
         characters = list(itertools.chain.from_iterable((npc.parser._parse_path(path, ignore_paths=[], include_bare=True) for path in search_paths)))
         assert len(list(characters)) == 8
 
+    # This test was to verify if the muypy tool was faulty compared to 
+    # the mutmut tool
     def test_invaild_extension_with_bare_false(self):
         #search_paths = []
         parseables = fixture_dir('parsing', 'characters', 'Changelings')
@@ -203,5 +216,5 @@ class TestMutations:
         search_paths=[parseables]
         characters = list(itertools.chain.from_iterable((npc.parser._parse_path(path, ignore_paths=[]) for path in search_paths)))
         for c in characters:
-            assert 'Urgesh' not in c.tags['name']
+           assert 'Urgesh' not in c.tags['name']
 
