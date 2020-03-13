@@ -29,7 +29,7 @@ then
 elif [[ "$1" == "-rm" ]];
 then
     echo "Writing report..."
-    mut.py --target npc/parser.py --unit-test tests/test_parser.py -runner pytest -m > "mutpy_report/result.txt"
+    mut.py --target npc/parser.py --unit-test tests/test_parser.py --runner pytest -m > "mutpy_report/result.txt"
     echo "Report complete."
 else
     echo "Command not found."

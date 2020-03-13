@@ -1,5 +1,6 @@
 import npc
 import pytest
+import itertools
 from tests.util import fixture_dir
 
 from npc.character.tags import UnknownTag
@@ -167,3 +168,16 @@ class TestHiding:
     def test_hide_single_subtag(self, character):
         c = character('Hidden Tags.nwod')
         assert c.tags('group').subtag('Seamen').hidden_values == ['Rower']
+    
+    def test_ignore_type(self):
+        parseables = fixture_dir('parsing', 'characters', 'Changelings')
+        testPath = fixture_dir('parsing', 'characters', 'Changelings')
+        characters = npc.parser.get_characters(search_paths=[parseables], ignore_paths=[testPath])
+        assert len(list(characters)) == 5
+    def test_no_ext(self):
+        #search_paths = []
+        parseables = fixture_dir('parsing', 'characters', 'Changelings', 'Frank Dickens.jrg')
+        testPath = fixture_dir('parsing', 'characters', 'Goblins')
+        search_paths=[parseables]
+        characters = list(itertools.chain.from_iterable((npc.parser._parse_path(path, ignore_paths=[], include_bare=True) for path in search_paths)))
+        assert characters[0].tags('name')[0] == 'Frank Dickens'

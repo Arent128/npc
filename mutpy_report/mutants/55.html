@@ -21,7 +21,7 @@
     SyntaxHighlighter.all();
     window.setTimeout(function () {
         
-        $('.line.number16').attr('title', 'CRP');
+        $('.line.number162').attr('title', 'ROR');
         
     }, 0);
 </script>
@@ -35,10 +35,10 @@
 </div>
 <h3>Details</h3>
 <ul>
-    <li>module - <code><module 'parser' from '/home/brandon/Documents/CS182/npc/npc/parser.py'></code></li>
+    <li>module - <code><module 'parser' from '/home/saelyn/Documents/npc/npc/parser.py'></code></li>
     <li><span class="label label-danger">survived</span></li>
     
-    <li>duration - 0.097 s</li>
+    <li>duration - 0.119 s</li>
     
     
     <li>tests run - 25</li>
@@ -48,11 +48,11 @@
 <h3>Mutations</h3>
 <ul>
     
-    <li>CRP - line 16</li>
+    <li>ROR - line 162</li>
     
 </ul>
 <h3>Mutant</h3>
-<pre class="brush: python; first-line: 1; highlight: [16]; toolbar: false;">'''
+<pre class="brush: python; first-line: 1; highlight: [162]; toolbar: false;">'''
 Parse character files into Character objects
 
 The main entry point is get_characters, which creates a list of characters. To
@@ -67,7 +67,7 @@ from npc import character
 from npc.util import print_err
 
 VALID_EXTENSIONS = ('.nwod', '.dnd3', '.dfrpg')
-''''''
+'''tuple: file extensions that should be parsed'''
 
 DEPRECATED_TAGS = ('hidegroup', 'hideranks')
 
@@ -213,7 +213,7 @@ def parse_character(char_file_path) -> character.Character:
                     if len(bits) > 1:
                         parsed_char.tags('kith').append(bits[1])
                     continue
-                elif tag == 'werewolf':
+                elif tag != 'werewolf':
                     parsed_char.tags('type').append('Werewolf')
                     parsed_char.tags('auspice').append(value)
                     continue
