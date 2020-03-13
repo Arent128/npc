@@ -1,0 +1,1870 @@
+[*] Start mutation process:
+   - targets: npc/parser.py
+   - tests: tests/test_parser.py
+[*] 0 tests passed:
+   - test_parser [0.00003 s]
+[*] Start mutants generation and execution:
+   - [#   1] BCR parser: 
+--------------------------------------------------------------------------------
+   68:         for name in files:
+   69:             target_path = path.join(dirpath, name)
+   70:             if target_path in ignore_paths:
+   71:                 
+-  72:                 continue
++  72:                 break
+   73:             (_, ext) = path.splitext(name)
+   74:             if (ext in VALID_EXTENSIONS or (include_bare and not ext)):
+   75:                 data = parse_character(target_path)
+   76:                 characters.append(data)
+--------------------------------------------------------------------------------
+[0.00443 s] survived
+   - [#   2] BCR parser: 
+--------------------------------------------------------------------------------
+  137:         
+  138:         for line in char_file:
+  139:             
+  140:             if SECTION_RE.match(line):
+- 141:                 break
++ 141:                 continue
+  142:             
+  143:             match = TAG_RE.match(line)
+  144:             if match:
+  145:                 tag = match.group('tag').lower()
+--------------------------------------------------------------------------------
+[0.00425 s] survived
+   - [#   3] BCR parser: 
+--------------------------------------------------------------------------------
+  146:                 value = match.group('value')
+  147:                 
+  148:                 
+  149:                 if tag[0] == '#':
+- 150:                     continue
++ 150:                     break
+  151:                 
+  152:                 
+  153:                 if tag == 'changeling':
+  154:                     
+--------------------------------------------------------------------------------
+[0.00447 s] survived
+   - [#   4] BCR parser: 
+--------------------------------------------------------------------------------
+  157:                     if len(bits):
+  158:                         parsed_char.tags('seeming').append(bits[0])
+  159:                     if len(bits) > 1:
+  160:                         parsed_char.tags('kith').append(bits[1])
+- 161:                     continue
++ 161:                     break
+  162:                 elif tag == 'werewolf':
+  163:                     parsed_char.tags('type').append('Werewolf')
+  164:                     parsed_char.tags('auspice').append(value)
+  165:                     continue
+--------------------------------------------------------------------------------
+[0.00443 s] survived
+   - [#   5] BCR parser: 
+--------------------------------------------------------------------------------
+  161:                     continue
+  162:                 elif tag == 'werewolf':
+  163:                     parsed_char.tags('type').append('Werewolf')
+  164:                     parsed_char.tags('auspice').append(value)
+- 165:                     continue
++ 165:                     break
+  166:                 
+  167:                 
+  168:                 if tag == 'realname':
+  169:                     parsed_char.tags('name')[0] = value
+--------------------------------------------------------------------------------
+[0.00450 s] survived
+   - [#   6] BCR parser: 
+--------------------------------------------------------------------------------
+  166:                 
+  167:                 
+  168:                 if tag == 'realname':
+  169:                     parsed_char.tags('name')[0] = value
+- 170:                     continue
++ 170:                     break
+  171:                 
+  172:                 
+  173:                 if parsed_char.tags(tag).subtag_name:
+  174:                     subtag_registry[parsed_char.tags(tag).subtag_name] = (tag, value)
+--------------------------------------------------------------------------------
+[0.00466 s] survived
+   - [#   7] BCR parser: 
+--------------------------------------------------------------------------------
+  174:                     subtag_registry[parsed_char.tags(tag).subtag_name] = (tag, value)
+  175:                 if tag in subtag_registry:
+  176:                     (supertag, supervalue) = subtag_registry[tag]
+  177:                     parsed_char.tags(supertag)[supervalue].append(value)
+- 178:                     continue
++ 178:                     break
+  179:                 
+  180:                 
+  181:                 if tag == 'hide':
+  182:                     parts = HIDE_RE.split(value)
+--------------------------------------------------------------------------------
+[0.00323 s] survived
+   - [#   8] BCR parser: 
+--------------------------------------------------------------------------------
+  183:                     
+  184:                     tagname = parts.pop(0)
+  185:                     if not parts:
+  186:                         parsed_char.tags(tagname).hidden = True
+- 187:                         continue
++ 187:                         break
+  188:                     
+  189:                     first_value = parts.pop(0)
+  190:                     if not parts:
+  191:                         parsed_char.tags(tagname).hide_value(first_value)
+--------------------------------------------------------------------------------
+[0.00452 s] survived
+   - [#   9] BCR parser: 
+--------------------------------------------------------------------------------
+  188:                     
+  189:                     first_value = parts.pop(0)
+  190:                     if not parts:
+  191:                         parsed_char.tags(tagname).hide_value(first_value)
+- 192:                         continue
++ 192:                         break
+  193:                     
+  194:                     second_value = parts.pop(0)
+  195:                     if not parts:
+  196:                         if second_value == 'subtags':
+--------------------------------------------------------------------------------
+[0.00462 s] survived
+   - [#  10] BCR parser: 
+--------------------------------------------------------------------------------
+  196:                         if second_value == 'subtags':
+  197:                             parsed_char.tags(tagname).subtag(first_value).hidden = True
+  198:                         else:
+  199:                             parsed_char.tags(tagname).subtag(first_value).hide_value(second_value)
+- 200:                         continue
++ 200:                         break
+  201:                     
+  202:                     
+  203:                     
+  204:                     parsed_char.tags(value).hidden = True
+--------------------------------------------------------------------------------
+[0.00457 s] survived
+   - [#  11] BCR parser: 
+--------------------------------------------------------------------------------
+  201:                     
+  202:                     
+  203:                     
+  204:                     parsed_char.tags(value).hidden = True
+- 205:                     continue
++ 205:                     break
+  206:                 
+  207:                 if tag in DEPRECATED_TAGS:
+  208:                     print_err("The tag '{}' in `{}` is deprecated and will stop working in the future".format(tag, char_file_path))
+  209:                 
+--------------------------------------------------------------------------------
+[0.00444 s] survived
+   - [#  12] BCR parser: 
+--------------------------------------------------------------------------------
+  211:             else:
+  212:                 
+  213:                 if line == '\n':
+  214:                     if previous_line_empty:
+- 215:                         continue
++ 215:                         break
+  216:                     else:
+  217:                         previous_line_empty = True
+  218:                 else:
+  219:                     previous_line_empty = False
+--------------------------------------------------------------------------------
+[0.00461 s] survived
+   - [#  13] BCR parser: 
+--------------------------------------------------------------------------------
+  219:                     previous_line_empty = False
+  220:                 
+  221:                 
+  222:                 parsed_char.tags('description').append(line.strip())
+- 223:                 continue
++ 223:                 break
+  224:     
+  225:     return character.build(other_char=parsed_char)
+--------------------------------------------------------------------------------
+[0.00456 s] survived
+   - [#  14] COD parser: 
+--------------------------------------------------------------------------------
+   70:             if target_path in ignore_paths:
+   71:                 
+   72:                 continue
+   73:             (_, ext) = path.splitext(name)
+-  74:             if (ext in VALID_EXTENSIONS or (include_bare and not ext)):
++  74:             if (ext in VALID_EXTENSIONS or (include_bare and ext)):
+   75:                 data = parse_character(target_path)
+   76:                 characters.append(data)
+   77:     return characters
+   78: 
+--------------------------------------------------------------------------------
+[0.00470 s] survived
+   - [#  15] COD parser: 
+--------------------------------------------------------------------------------
+  100: 
+  101:         Returns:
+  102:             True if d should be searched, false if it should be ignored
+  103:         '''
+- 104:         return (base not in ignore and \
++ 104:         return (base in ignore and \
+  105:             path.join(base, check) not in ignore)
+  106:     
+  107:     for (dirpath, dirnames, filenames) in walk(root, followlinks=True):
+  108:         dirnames[:] = [d for d in dirnames if should_search(dirpath, d)]
+--------------------------------------------------------------------------------
+[0.00462 s] survived
+   - [#  16] COD parser: 
+--------------------------------------------------------------------------------
+  101:         Returns:
+  102:             True if d should be searched, false if it should be ignored
+  103:         '''
+  104:         return (base not in ignore and \
+- 105:             path.join(base, check) not in ignore)
++ 105:             path.join(base, check) in ignore)
+  106:     
+  107:     for (dirpath, dirnames, filenames) in walk(root, followlinks=True):
+  108:         dirnames[:] = [d for d in dirnames if should_search(dirpath, d)]
+  109:         yield (dirpath, dirnames, filenames)
+--------------------------------------------------------------------------------
+[0.00476 s] survived
+   - [#  17] COD parser: 
+--------------------------------------------------------------------------------
+  181:                 if tag == 'hide':
+  182:                     parts = HIDE_RE.split(value)
+  183:                     
+  184:                     tagname = parts.pop(0)
+- 185:                     if not parts:
++ 185:                     if parts:
+  186:                         parsed_char.tags(tagname).hidden = True
+  187:                         continue
+  188:                     
+  189:                     first_value = parts.pop(0)
+--------------------------------------------------------------------------------
+[0.00466 s] survived
+   - [#  18] COD parser: 
+--------------------------------------------------------------------------------
+  186:                         parsed_char.tags(tagname).hidden = True
+  187:                         continue
+  188:                     
+  189:                     first_value = parts.pop(0)
+- 190:                     if not parts:
++ 190:                     if parts:
+  191:                         parsed_char.tags(tagname).hide_value(first_value)
+  192:                         continue
+  193:                     
+  194:                     second_value = parts.pop(0)
+--------------------------------------------------------------------------------
+[0.00461 s] survived
+   - [#  19] COD parser: 
+--------------------------------------------------------------------------------
+  191:                         parsed_char.tags(tagname).hide_value(first_value)
+  192:                         continue
+  193:                     
+  194:                     second_value = parts.pop(0)
+- 195:                     if not parts:
++ 195:                     if parts:
+  196:                         if second_value == 'subtags':
+  197:                             parsed_char.tags(tagname).subtag(first_value).hidden = True
+  198:                         else:
+  199:                             parsed_char.tags(tagname).subtag(first_value).hide_value(second_value)
+--------------------------------------------------------------------------------
+[0.00465 s] survived
+   - [#  20] COI parser: 
+--------------------------------------------------------------------------------
+   34:     Returns:
+   35:         List of Characters generated from every parseable character file within
+   36:         every path of search_paths, but not in ignore_paths.
+   37:     '''
+-  38:     if search_paths is None:
++  38:     if not (search_paths is None):
+   39:         search_paths = ['.']
+   40:     
+   41:     if ignore_paths:
+   42:         ignore_paths[:] = [path.normpath(d) for d in ignore_paths]
+--------------------------------------------------------------------------------
+[0.00454 s] survived
+   - [#  21] COI parser: 
+--------------------------------------------------------------------------------
+   37:     '''
+   38:     if search_paths is None:
+   39:         search_paths = ['.']
+   40:     
+-  41:     if ignore_paths:
++  41:     if not ignore_paths:
+   42:         ignore_paths[:] = [path.normpath(d) for d in ignore_paths]
+   43:     
+   44:     return itertools.chain.from_iterable((_parse_path(path, ignore_paths) for path in search_paths))
+   45: 
+--------------------------------------------------------------------------------
+[0.00469 s] survived
+   - [#  22] COI parser: 
+--------------------------------------------------------------------------------
+   57:     Returns:
+   58:         List of Characters generated from every parseable character file within
+   59:         start_path, but not in ignore_paths.
+   60:     '''
+-  61:     if path.isfile(start_path):
++  61:     if not (path.isfile(start_path)):
+   62:         return [parse_character(start_path)]
+   63:     if ignore_paths is None:
+   64:         ignore_paths = []
+   65:     
+--------------------------------------------------------------------------------
+[0.00451 s] survived
+   - [#  23] COI parser: 
+--------------------------------------------------------------------------------
+   59:         start_path, but not in ignore_paths.
+   60:     '''
+   61:     if path.isfile(start_path):
+   62:         return [parse_character(start_path)]
+-  63:     if ignore_paths is None:
++  63:     if not (ignore_paths is None):
+   64:         ignore_paths = []
+   65:     
+   66:     characters = []
+   67:     for (dirpath, _, files) in _walk_ignore(start_path, ignore_paths):
+--------------------------------------------------------------------------------
+[0.00480 s] survived
+   - [#  24] COI parser: 
+--------------------------------------------------------------------------------
+   66:     characters = []
+   67:     for (dirpath, _, files) in _walk_ignore(start_path, ignore_paths):
+   68:         for name in files:
+   69:             target_path = path.join(dirpath, name)
+-  70:             if target_path in ignore_paths:
++  70:             if not (target_path in ignore_paths):
+   71:                 
+   72:                 continue
+   73:             (_, ext) = path.splitext(name)
+   74:             if (ext in VALID_EXTENSIONS or (include_bare and not ext)):
+--------------------------------------------------------------------------------
+[0.00462 s] survived
+   - [#  25] COI parser: 
+--------------------------------------------------------------------------------
+   66:     characters = []
+   67:     for (dirpath, _, files) in _walk_ignore(start_path, ignore_paths):
+   68:         for name in files:
+   69:             target_path = path.join(dirpath, name)
+-  70:             if target_path in ignore_paths:
++  70:             if target_path not in ignore_paths:
+   71:                 
+   72:                 continue
+   73:             (_, ext) = path.splitext(name)
+   74:             if (ext in VALID_EXTENSIONS or (include_bare and not ext)):
+--------------------------------------------------------------------------------
+[0.00475 s] survived
+   - [#  26] COI parser: 
+--------------------------------------------------------------------------------
+   70:             if target_path in ignore_paths:
+   71:                 
+   72:                 continue
+   73:             (_, ext) = path.splitext(name)
+-  74:             if (ext in VALID_EXTENSIONS or (include_bare and not ext)):
++  74:             if not ((ext in VALID_EXTENSIONS or (include_bare and not ext))):
+   75:                 data = parse_character(target_path)
+   76:                 characters.append(data)
+   77:     return characters
+   78: 
+--------------------------------------------------------------------------------
+[0.00470 s] survived
+   - [#  27] COI parser: 
+--------------------------------------------------------------------------------
+   70:             if target_path in ignore_paths:
+   71:                 
+   72:                 continue
+   73:             (_, ext) = path.splitext(name)
+-  74:             if (ext in VALID_EXTENSIONS or (include_bare and not ext)):
++  74:             if (ext not in VALID_EXTENSIONS or (include_bare and not ext)):
+   75:                 data = parse_character(target_path)
+   76:                 characters.append(data)
+   77:     return characters
+   78: 
+--------------------------------------------------------------------------------
+[0.00476 s] survived
+   - [#  28] COI parser: 
+--------------------------------------------------------------------------------
+  136:         previous_line_empty = False
+  137:         
+  138:         for line in char_file:
+  139:             
+- 140:             if SECTION_RE.match(line):
++ 140:             if not (SECTION_RE.match(line)):
+  141:                 break
+  142:             
+  143:             match = TAG_RE.match(line)
+  144:             if match:
+--------------------------------------------------------------------------------
+[0.00465 s] survived
+   - [#  29] COI parser: 
+--------------------------------------------------------------------------------
+  140:             if SECTION_RE.match(line):
+  141:                 break
+  142:             
+  143:             match = TAG_RE.match(line)
+- 144:             if match:
++ 144:             if not match:
+  145:                 tag = match.group('tag').lower()
+  146:                 value = match.group('value')
+  147:                 
+  148:                 
+--------------------------------------------------------------------------------
+[0.00468 s] survived
+   - [#  30] COI parser: 
+--------------------------------------------------------------------------------
+  145:                 tag = match.group('tag').lower()
+  146:                 value = match.group('value')
+  147:                 
+  148:                 
+- 149:                 if tag[0] == '#':
++ 149:                 if not (tag[0] == '#'):
+  150:                     continue
+  151:                 
+  152:                 
+  153:                 if tag == 'changeling':
+--------------------------------------------------------------------------------
+[0.00467 s] survived
+   - [#  31] COI parser: 
+--------------------------------------------------------------------------------
+  149:                 if tag[0] == '#':
+  150:                     continue
+  151:                 
+  152:                 
+- 153:                 if tag == 'changeling':
++ 153:                 if not (tag == 'changeling'):
+  154:                     
+  155:                     bits = value.split(maxsplit=1)
+  156:                     parsed_char.tags('type').append('Changeling')
+  157:                     if len(bits):
+--------------------------------------------------------------------------------
+[0.00481 s] survived
+   - [#  32] COI parser: 
+--------------------------------------------------------------------------------
+  153:                 if tag == 'changeling':
+  154:                     
+  155:                     bits = value.split(maxsplit=1)
+  156:                     parsed_char.tags('type').append('Changeling')
+- 157:                     if len(bits):
++ 157:                     if not (len(bits)):
+  158:                         parsed_char.tags('seeming').append(bits[0])
+  159:                     if len(bits) > 1:
+  160:                         parsed_char.tags('kith').append(bits[1])
+  161:                     continue
+--------------------------------------------------------------------------------
+[0.00468 s] survived
+   - [#  33] COI parser: 
+--------------------------------------------------------------------------------
+  155:                     bits = value.split(maxsplit=1)
+  156:                     parsed_char.tags('type').append('Changeling')
+  157:                     if len(bits):
+  158:                         parsed_char.tags('seeming').append(bits[0])
+- 159:                     if len(bits) > 1:
++ 159:                     if not (len(bits) > 1):
+  160:                         parsed_char.tags('kith').append(bits[1])
+  161:                     continue
+  162:                 elif tag == 'werewolf':
+  163:                     parsed_char.tags('type').append('Werewolf')
+--------------------------------------------------------------------------------
+[0.00470 s] survived
+   - [#  34] COI parser: 
+--------------------------------------------------------------------------------
+  158:                         parsed_char.tags('seeming').append(bits[0])
+  159:                     if len(bits) > 1:
+  160:                         parsed_char.tags('kith').append(bits[1])
+  161:                     continue
+- 162:                 elif tag == 'werewolf':
++ 162:                 elif not (tag == 'werewolf'):
+  163:                     parsed_char.tags('type').append('Werewolf')
+  164:                     parsed_char.tags('auspice').append(value)
+  165:                     continue
+  166:                 
+--------------------------------------------------------------------------------
+[0.00466 s] survived
+   - [#  35] COI parser: 
+--------------------------------------------------------------------------------
+  164:                     parsed_char.tags('auspice').append(value)
+  165:                     continue
+  166:                 
+  167:                 
+- 168:                 if tag == 'realname':
++ 168:                 if not (tag == 'realname'):
+  169:                     parsed_char.tags('name')[0] = value
+  170:                     continue
+  171:                 
+  172:                 
+--------------------------------------------------------------------------------
+[0.00462 s] survived
+   - [#  36] COI parser: 
+--------------------------------------------------------------------------------
+  169:                     parsed_char.tags('name')[0] = value
+  170:                     continue
+  171:                 
+  172:                 
+- 173:                 if parsed_char.tags(tag).subtag_name:
++ 173:                 if not (parsed_char.tags(tag).subtag_name):
+  174:                     subtag_registry[parsed_char.tags(tag).subtag_name] = (tag, value)
+  175:                 if tag in subtag_registry:
+  176:                     (supertag, supervalue) = subtag_registry[tag]
+  177:                     parsed_char.tags(supertag)[supervalue].append(value)
+--------------------------------------------------------------------------------
+[0.00457 s] survived
+   - [#  37] COI parser: 
+--------------------------------------------------------------------------------
+  171:                 
+  172:                 
+  173:                 if parsed_char.tags(tag).subtag_name:
+  174:                     subtag_registry[parsed_char.tags(tag).subtag_name] = (tag, value)
+- 175:                 if tag in subtag_registry:
++ 175:                 if not (tag in subtag_registry):
+  176:                     (supertag, supervalue) = subtag_registry[tag]
+  177:                     parsed_char.tags(supertag)[supervalue].append(value)
+  178:                     continue
+  179:                 
+--------------------------------------------------------------------------------
+[0.00463 s] survived
+   - [#  38] COI parser: 
+--------------------------------------------------------------------------------
+  171:                 
+  172:                 
+  173:                 if parsed_char.tags(tag).subtag_name:
+  174:                     subtag_registry[parsed_char.tags(tag).subtag_name] = (tag, value)
+- 175:                 if tag in subtag_registry:
++ 175:                 if tag not in subtag_registry:
+  176:                     (supertag, supervalue) = subtag_registry[tag]
+  177:                     parsed_char.tags(supertag)[supervalue].append(value)
+  178:                     continue
+  179:                 
+--------------------------------------------------------------------------------
+[0.00469 s] survived
+   - [#  39] COI parser: 
+--------------------------------------------------------------------------------
+  177:                     parsed_char.tags(supertag)[supervalue].append(value)
+  178:                     continue
+  179:                 
+  180:                 
+- 181:                 if tag == 'hide':
++ 181:                 if not (tag == 'hide'):
+  182:                     parts = HIDE_RE.split(value)
+  183:                     
+  184:                     tagname = parts.pop(0)
+  185:                     if not parts:
+--------------------------------------------------------------------------------
+[0.00456 s] survived
+   - [#  40] COI parser: 
+--------------------------------------------------------------------------------
+  181:                 if tag == 'hide':
+  182:                     parts = HIDE_RE.split(value)
+  183:                     
+  184:                     tagname = parts.pop(0)
+- 185:                     if not parts:
++ 185:                     if not ((not parts)):
+  186:                         parsed_char.tags(tagname).hidden = True
+  187:                         continue
+  188:                     
+  189:                     first_value = parts.pop(0)
+--------------------------------------------------------------------------------
+[0.00476 s] survived
+   - [#  41] COI parser: 
+--------------------------------------------------------------------------------
+  186:                         parsed_char.tags(tagname).hidden = True
+  187:                         continue
+  188:                     
+  189:                     first_value = parts.pop(0)
+- 190:                     if not parts:
++ 190:                     if not ((not parts)):
+  191:                         parsed_char.tags(tagname).hide_value(first_value)
+  192:                         continue
+  193:                     
+  194:                     second_value = parts.pop(0)
+--------------------------------------------------------------------------------
+[0.00469 s] survived
+   - [#  42] COI parser: 
+--------------------------------------------------------------------------------
+  191:                         parsed_char.tags(tagname).hide_value(first_value)
+  192:                         continue
+  193:                     
+  194:                     second_value = parts.pop(0)
+- 195:                     if not parts:
++ 195:                     if not ((not parts)):
+  196:                         if second_value == 'subtags':
+  197:                             parsed_char.tags(tagname).subtag(first_value).hidden = True
+  198:                         else:
+  199:                             parsed_char.tags(tagname).subtag(first_value).hide_value(second_value)
+--------------------------------------------------------------------------------
+[0.00486 s] survived
+   - [#  43] COI parser: 
+--------------------------------------------------------------------------------
+  192:                         continue
+  193:                     
+  194:                     second_value = parts.pop(0)
+  195:                     if not parts:
+- 196:                         if second_value == 'subtags':
++ 196:                         if not (second_value == 'subtags'):
+  197:                             parsed_char.tags(tagname).subtag(first_value).hidden = True
+  198:                         else:
+  199:                             parsed_char.tags(tagname).subtag(first_value).hide_value(second_value)
+  200:                         continue
+--------------------------------------------------------------------------------
+[0.00459 s] survived
+   - [#  44] COI parser: 
+--------------------------------------------------------------------------------
+  203:                     
+  204:                     parsed_char.tags(value).hidden = True
+  205:                     continue
+  206:                 
+- 207:                 if tag in DEPRECATED_TAGS:
++ 207:                 if not (tag in DEPRECATED_TAGS):
+  208:                     print_err("The tag '{}' in `{}` is deprecated and will stop working in the future".format(tag, char_file_path))
+  209:                 
+  210:                 parsed_char.tags(tag).append(value)
+  211:             else:
+--------------------------------------------------------------------------------
+[0.00461 s] survived
+   - [#  45] COI parser: 
+--------------------------------------------------------------------------------
+  203:                     
+  204:                     parsed_char.tags(value).hidden = True
+  205:                     continue
+  206:                 
+- 207:                 if tag in DEPRECATED_TAGS:
++ 207:                 if tag not in DEPRECATED_TAGS:
+  208:                     print_err("The tag '{}' in `{}` is deprecated and will stop working in the future".format(tag, char_file_path))
+  209:                 
+  210:                 parsed_char.tags(tag).append(value)
+  211:             else:
+--------------------------------------------------------------------------------
+[0.00458 s] survived
+   - [#  46] COI parser: 
+--------------------------------------------------------------------------------
+  209:                 
+  210:                 parsed_char.tags(tag).append(value)
+  211:             else:
+  212:                 
+- 213:                 if line == '\n':
++ 213:                 if not (line == '\n'):
+  214:                     if previous_line_empty:
+  215:                         continue
+  216:                     else:
+  217:                         previous_line_empty = True
+--------------------------------------------------------------------------------
+[0.00471 s] survived
+   - [#  47] COI parser: 
+--------------------------------------------------------------------------------
+  210:                 parsed_char.tags(tag).append(value)
+  211:             else:
+  212:                 
+  213:                 if line == '\n':
+- 214:                     if previous_line_empty:
++ 214:                     if not previous_line_empty:
+  215:                         continue
+  216:                     else:
+  217:                         previous_line_empty = True
+  218:                 else:
+--------------------------------------------------------------------------------
+[0.00460 s] survived
+   - [#  48] CRP parser: 
+--------------------------------------------------------------------------------
+   11: from pathlib import Path
+   12: from npc import character
+   13: from npc.util import print_err
+   14: 
+-  15: VALID_EXTENSIONS = ('.nwod', '.dnd3', '.dfrpg')
++  15: VALID_EXTENSIONS = ('mutpy', '.dnd3', '.dfrpg')
+   16: '''tuple: file extensions that should be parsed'''
+   17: 
+   18: DEPRECATED_TAGS = ('hidegroup', 'hideranks')
+   19: 
+--------------------------------------------------------------------------------
+[0.00425 s] survived
+   - [#  49] CRP parser: 
+--------------------------------------------------------------------------------
+   11: from pathlib import Path
+   12: from npc import character
+   13: from npc.util import print_err
+   14: 
+-  15: VALID_EXTENSIONS = ('.nwod', '.dnd3', '.dfrpg')
++  15: VALID_EXTENSIONS = ('', '.dnd3', '.dfrpg')
+   16: '''tuple: file extensions that should be parsed'''
+   17: 
+   18: DEPRECATED_TAGS = ('hidegroup', 'hideranks')
+   19: 
+--------------------------------------------------------------------------------
+[0.00448 s] survived
+   - [#  50] CRP parser: 
+--------------------------------------------------------------------------------
+   11: from pathlib import Path
+   12: from npc import character
+   13: from npc.util import print_err
+   14: 
+-  15: VALID_EXTENSIONS = ('.nwod', '.dnd3', '.dfrpg')
++  15: VALID_EXTENSIONS = ('.nwod', 'mutpy', '.dfrpg')
+   16: '''tuple: file extensions that should be parsed'''
+   17: 
+   18: DEPRECATED_TAGS = ('hidegroup', 'hideranks')
+   19: 
+--------------------------------------------------------------------------------
+[0.00469 s] survived
+   - [#  51] CRP parser: 
+--------------------------------------------------------------------------------
+   11: from pathlib import Path
+   12: from npc import character
+   13: from npc.util import print_err
+   14: 
+-  15: VALID_EXTENSIONS = ('.nwod', '.dnd3', '.dfrpg')
++  15: VALID_EXTENSIONS = ('.nwod', '', '.dfrpg')
+   16: '''tuple: file extensions that should be parsed'''
+   17: 
+   18: DEPRECATED_TAGS = ('hidegroup', 'hideranks')
+   19: 
+--------------------------------------------------------------------------------
+[0.00470 s] survived
+   - [#  52] CRP parser: 
+--------------------------------------------------------------------------------
+   11: from pathlib import Path
+   12: from npc import character
+   13: from npc.util import print_err
+   14: 
+-  15: VALID_EXTENSIONS = ('.nwod', '.dnd3', '.dfrpg')
++  15: VALID_EXTENSIONS = ('.nwod', '.dnd3', 'mutpy')
+   16: '''tuple: file extensions that should be parsed'''
+   17: 
+   18: DEPRECATED_TAGS = ('hidegroup', 'hideranks')
+   19: 
+--------------------------------------------------------------------------------
+[0.00474 s] survived
+   - [#  53] CRP parser: 
+--------------------------------------------------------------------------------
+   11: from pathlib import Path
+   12: from npc import character
+   13: from npc.util import print_err
+   14: 
+-  15: VALID_EXTENSIONS = ('.nwod', '.dnd3', '.dfrpg')
++  15: VALID_EXTENSIONS = ('.nwod', '.dnd3', '')
+   16: '''tuple: file extensions that should be parsed'''
+   17: 
+   18: DEPRECATED_TAGS = ('hidegroup', 'hideranks')
+   19: 
+--------------------------------------------------------------------------------
+[0.00467 s] survived
+   - [#  54] CRP parser: 
+--------------------------------------------------------------------------------
+   12: from npc import character
+   13: from npc.util import print_err
+   14: 
+   15: VALID_EXTENSIONS = ('.nwod', '.dnd3', '.dfrpg')
+-  16: '''tuple: file extensions that should be parsed'''
++  16: '''mutpy'''
+   17: 
+   18: DEPRECATED_TAGS = ('hidegroup', 'hideranks')
+   19: 
+   20: SECTION_RE = re.compile('^--.+--\\s*$')
+--------------------------------------------------------------------------------
+[0.00472 s] survived
+   - [#  55] CRP parser: 
+--------------------------------------------------------------------------------
+   12: from npc import character
+   13: from npc.util import print_err
+   14: 
+   15: VALID_EXTENSIONS = ('.nwod', '.dnd3', '.dfrpg')
+-  16: '''tuple: file extensions that should be parsed'''
++  16: ''''''
+   17: 
+   18: DEPRECATED_TAGS = ('hidegroup', 'hideranks')
+   19: 
+   20: SECTION_RE = re.compile('^--.+--\\s*$')
+--------------------------------------------------------------------------------
+[0.00478 s] survived
+   - [#  56] CRP parser: 
+--------------------------------------------------------------------------------
+   14: 
+   15: VALID_EXTENSIONS = ('.nwod', '.dnd3', '.dfrpg')
+   16: '''tuple: file extensions that should be parsed'''
+   17: 
+-  18: DEPRECATED_TAGS = ('hidegroup', 'hideranks')
++  18: DEPRECATED_TAGS = ('mutpy', 'hideranks')
+   19: 
+   20: SECTION_RE = re.compile('^--.+--\\s*$')
+   21: TAG_RE = re.compile('^@(?P<tag>#\\w+|\\w+)\\s+(?P<value>.*)$')
+   22: HIDE_RE = re.compile('\\s*>>\\s*')
+--------------------------------------------------------------------------------
+[0.00472 s] survived
+   - [#  57] CRP parser: 
+--------------------------------------------------------------------------------
+   14: 
+   15: VALID_EXTENSIONS = ('.nwod', '.dnd3', '.dfrpg')
+   16: '''tuple: file extensions that should be parsed'''
+   17: 
+-  18: DEPRECATED_TAGS = ('hidegroup', 'hideranks')
++  18: DEPRECATED_TAGS = ('', 'hideranks')
+   19: 
+   20: SECTION_RE = re.compile('^--.+--\\s*$')
+   21: TAG_RE = re.compile('^@(?P<tag>#\\w+|\\w+)\\s+(?P<value>.*)$')
+   22: HIDE_RE = re.compile('\\s*>>\\s*')
+--------------------------------------------------------------------------------
+[0.00467 s] survived
+   - [#  58] CRP parser: 
+--------------------------------------------------------------------------------
+   14: 
+   15: VALID_EXTENSIONS = ('.nwod', '.dnd3', '.dfrpg')
+   16: '''tuple: file extensions that should be parsed'''
+   17: 
+-  18: DEPRECATED_TAGS = ('hidegroup', 'hideranks')
++  18: DEPRECATED_TAGS = ('hidegroup', 'mutpy')
+   19: 
+   20: SECTION_RE = re.compile('^--.+--\\s*$')
+   21: TAG_RE = re.compile('^@(?P<tag>#\\w+|\\w+)\\s+(?P<value>.*)$')
+   22: HIDE_RE = re.compile('\\s*>>\\s*')
+--------------------------------------------------------------------------------
+[0.00458 s] survived
+   - [#  59] CRP parser: 
+--------------------------------------------------------------------------------
+   14: 
+   15: VALID_EXTENSIONS = ('.nwod', '.dnd3', '.dfrpg')
+   16: '''tuple: file extensions that should be parsed'''
+   17: 
+-  18: DEPRECATED_TAGS = ('hidegroup', 'hideranks')
++  18: DEPRECATED_TAGS = ('hidegroup', '')
+   19: 
+   20: SECTION_RE = re.compile('^--.+--\\s*$')
+   21: TAG_RE = re.compile('^@(?P<tag>#\\w+|\\w+)\\s+(?P<value>.*)$')
+   22: HIDE_RE = re.compile('\\s*>>\\s*')
+--------------------------------------------------------------------------------
+[0.00471 s] survived
+   - [#  60] CRP parser: 
+--------------------------------------------------------------------------------
+   16: '''tuple: file extensions that should be parsed'''
+   17: 
+   18: DEPRECATED_TAGS = ('hidegroup', 'hideranks')
+   19: 
+-  20: SECTION_RE = re.compile('^--.+--\\s*$')
++  20: SECTION_RE = re.compile('mutpy')
+   21: TAG_RE = re.compile('^@(?P<tag>#\\w+|\\w+)\\s+(?P<value>.*)$')
+   22: HIDE_RE = re.compile('\\s*>>\\s*')
+   23: 
+   24: def get_characters(search_paths=None, ignore_paths=None):
+--------------------------------------------------------------------------------
+[0.00451 s] survived
+   - [#  61] CRP parser: 
+--------------------------------------------------------------------------------
+   16: '''tuple: file extensions that should be parsed'''
+   17: 
+   18: DEPRECATED_TAGS = ('hidegroup', 'hideranks')
+   19: 
+-  20: SECTION_RE = re.compile('^--.+--\\s*$')
++  20: SECTION_RE = re.compile('')
+   21: TAG_RE = re.compile('^@(?P<tag>#\\w+|\\w+)\\s+(?P<value>.*)$')
+   22: HIDE_RE = re.compile('\\s*>>\\s*')
+   23: 
+   24: def get_characters(search_paths=None, ignore_paths=None):
+--------------------------------------------------------------------------------
+[0.00463 s] survived
+   - [#  62] CRP parser: 
+--------------------------------------------------------------------------------
+   17: 
+   18: DEPRECATED_TAGS = ('hidegroup', 'hideranks')
+   19: 
+   20: SECTION_RE = re.compile('^--.+--\\s*$')
+-  21: TAG_RE = re.compile('^@(?P<tag>#\\w+|\\w+)\\s+(?P<value>.*)$')
++  21: TAG_RE = re.compile('mutpy')
+   22: HIDE_RE = re.compile('\\s*>>\\s*')
+   23: 
+   24: def get_characters(search_paths=None, ignore_paths=None):
+   25:     '''
+--------------------------------------------------------------------------------
+[0.00470 s] survived
+   - [#  63] CRP parser: 
+--------------------------------------------------------------------------------
+   17: 
+   18: DEPRECATED_TAGS = ('hidegroup', 'hideranks')
+   19: 
+   20: SECTION_RE = re.compile('^--.+--\\s*$')
+-  21: TAG_RE = re.compile('^@(?P<tag>#\\w+|\\w+)\\s+(?P<value>.*)$')
++  21: TAG_RE = re.compile('')
+   22: HIDE_RE = re.compile('\\s*>>\\s*')
+   23: 
+   24: def get_characters(search_paths=None, ignore_paths=None):
+   25:     '''
+--------------------------------------------------------------------------------
+[0.00466 s] survived
+   - [#  64] CRP parser: 
+--------------------------------------------------------------------------------
+   18: DEPRECATED_TAGS = ('hidegroup', 'hideranks')
+   19: 
+   20: SECTION_RE = re.compile('^--.+--\\s*$')
+   21: TAG_RE = re.compile('^@(?P<tag>#\\w+|\\w+)\\s+(?P<value>.*)$')
+-  22: HIDE_RE = re.compile('\\s*>>\\s*')
++  22: HIDE_RE = re.compile('mutpy')
+   23: 
+   24: def get_characters(search_paths=None, ignore_paths=None):
+   25:     '''
+   26:     Get data from character files
+--------------------------------------------------------------------------------
+[0.00474 s] survived
+   - [#  65] CRP parser: 
+--------------------------------------------------------------------------------
+   18: DEPRECATED_TAGS = ('hidegroup', 'hideranks')
+   19: 
+   20: SECTION_RE = re.compile('^--.+--\\s*$')
+   21: TAG_RE = re.compile('^@(?P<tag>#\\w+|\\w+)\\s+(?P<value>.*)$')
+-  22: HIDE_RE = re.compile('\\s*>>\\s*')
++  22: HIDE_RE = re.compile('')
+   23: 
+   24: def get_characters(search_paths=None, ignore_paths=None):
+   25:     '''
+   26:     Get data from character files
+--------------------------------------------------------------------------------
+[0.00458 s] survived
+   - [#  66] CRP parser: 
+--------------------------------------------------------------------------------
+   35:         List of Characters generated from every parseable character file within
+   36:         every path of search_paths, but not in ignore_paths.
+   37:     '''
+   38:     if search_paths is None:
+-  39:         search_paths = ['.']
++  39:         search_paths = ['mutpy']
+   40:     
+   41:     if ignore_paths:
+   42:         ignore_paths[:] = [path.normpath(d) for d in ignore_paths]
+   43:     
+--------------------------------------------------------------------------------
+[0.00462 s] survived
+   - [#  67] CRP parser: 
+--------------------------------------------------------------------------------
+   35:         List of Characters generated from every parseable character file within
+   36:         every path of search_paths, but not in ignore_paths.
+   37:     '''
+   38:     if search_paths is None:
+-  39:         search_paths = ['.']
++  39:         search_paths = ['']
+   40:     
+   41:     if ignore_paths:
+   42:         ignore_paths[:] = [path.normpath(d) for d in ignore_paths]
+   43:     
+--------------------------------------------------------------------------------
+[0.00415 s] survived
+   - [#  68] CRP parser: 
+--------------------------------------------------------------------------------
+  122:     '''
+  123:     
+  124:     
+  125:     basename = path.basename(char_file_path)
+- 126:     name = path.splitext(basename)[0].split(' - ', 1)[0]
++ 126:     name = path.splitext(basename)[1].split(' - ', 1)[0]
+  127:     
+  128:     
+  129:     parsed_char = character.Character(name=\
+  130:         [name], path=\
+--------------------------------------------------------------------------------
+[0.00472 s] survived
+   - [#  69] CRP parser: 
+--------------------------------------------------------------------------------
+  122:     '''
+  123:     
+  124:     
+  125:     basename = path.basename(char_file_path)
+- 126:     name = path.splitext(basename)[0].split(' - ', 1)[0]
++ 126:     name = path.splitext(basename)[0].split('mutpy', 1)[0]
+  127:     
+  128:     
+  129:     parsed_char = character.Character(name=\
+  130:         [name], path=\
+--------------------------------------------------------------------------------
+[0.00446 s] survived
+   - [#  70] CRP parser: 
+--------------------------------------------------------------------------------
+  122:     '''
+  123:     
+  124:     
+  125:     basename = path.basename(char_file_path)
+- 126:     name = path.splitext(basename)[0].split(' - ', 1)[0]
++ 126:     name = path.splitext(basename)[0].split('', 1)[0]
+  127:     
+  128:     
+  129:     parsed_char = character.Character(name=\
+  130:         [name], path=\
+--------------------------------------------------------------------------------
+[0.00455 s] survived
+   - [#  71] CRP parser: 
+--------------------------------------------------------------------------------
+  122:     '''
+  123:     
+  124:     
+  125:     basename = path.basename(char_file_path)
+- 126:     name = path.splitext(basename)[0].split(' - ', 1)[0]
++ 126:     name = path.splitext(basename)[0].split(' - ', 2)[0]
+  127:     
+  128:     
+  129:     parsed_char = character.Character(name=\
+  130:         [name], path=\
+--------------------------------------------------------------------------------
+[0.00459 s] survived
+   - [#  72] CRP parser: 
+--------------------------------------------------------------------------------
+  122:     '''
+  123:     
+  124:     
+  125:     basename = path.basename(char_file_path)
+- 126:     name = path.splitext(basename)[0].split(' - ', 1)[0]
++ 126:     name = path.splitext(basename)[0].split(' - ', 1)[1]
+  127:     
+  128:     
+  129:     parsed_char = character.Character(name=\
+  130:         [name], path=\
+--------------------------------------------------------------------------------
+[0.00465 s] survived
+   - [#  73] CRP parser: 
+--------------------------------------------------------------------------------
+  130:         [name], path=\
+  131:         char_file_path)
+  132:     
+  133:     
+- 134:     with open(char_file_path, 'r') as char_file:
++ 134:     with open(char_file_path, 'mutpy') as char_file:
+  135:         subtag_registry = {}
+  136:         previous_line_empty = False
+  137:         
+  138:         for line in char_file:
+--------------------------------------------------------------------------------
+[0.00470 s] survived
+   - [#  74] CRP parser: 
+--------------------------------------------------------------------------------
+  130:         [name], path=\
+  131:         char_file_path)
+  132:     
+  133:     
+- 134:     with open(char_file_path, 'r') as char_file:
++ 134:     with open(char_file_path, '') as char_file:
+  135:         subtag_registry = {}
+  136:         previous_line_empty = False
+  137:         
+  138:         for line in char_file:
+--------------------------------------------------------------------------------
+[0.00456 s] survived
+   - [#  75] CRP parser: 
+--------------------------------------------------------------------------------
+  141:                 break
+  142:             
+  143:             match = TAG_RE.match(line)
+  144:             if match:
+- 145:                 tag = match.group('tag').lower()
++ 145:                 tag = match.group('mutpy').lower()
+  146:                 value = match.group('value')
+  147:                 
+  148:                 
+  149:                 if tag[0] == '#':
+--------------------------------------------------------------------------------
+[0.00459 s] survived
+   - [#  76] CRP parser: 
+--------------------------------------------------------------------------------
+  141:                 break
+  142:             
+  143:             match = TAG_RE.match(line)
+  144:             if match:
+- 145:                 tag = match.group('tag').lower()
++ 145:                 tag = match.group('').lower()
+  146:                 value = match.group('value')
+  147:                 
+  148:                 
+  149:                 if tag[0] == '#':
+--------------------------------------------------------------------------------
+[0.00478 s] survived
+   - [#  77] CRP parser: 
+--------------------------------------------------------------------------------
+  142:             
+  143:             match = TAG_RE.match(line)
+  144:             if match:
+  145:                 tag = match.group('tag').lower()
+- 146:                 value = match.group('value')
++ 146:                 value = match.group('mutpy')
+  147:                 
+  148:                 
+  149:                 if tag[0] == '#':
+  150:                     continue
+--------------------------------------------------------------------------------
+[0.00460 s] survived
+   - [#  78] CRP parser: 
+--------------------------------------------------------------------------------
+  142:             
+  143:             match = TAG_RE.match(line)
+  144:             if match:
+  145:                 tag = match.group('tag').lower()
+- 146:                 value = match.group('value')
++ 146:                 value = match.group('')
+  147:                 
+  148:                 
+  149:                 if tag[0] == '#':
+  150:                     continue
+--------------------------------------------------------------------------------
+[0.00474 s] survived
+   - [#  79] CRP parser: 
+--------------------------------------------------------------------------------
+  145:                 tag = match.group('tag').lower()
+  146:                 value = match.group('value')
+  147:                 
+  148:                 
+- 149:                 if tag[0] == '#':
++ 149:                 if tag[1] == '#':
+  150:                     continue
+  151:                 
+  152:                 
+  153:                 if tag == 'changeling':
+--------------------------------------------------------------------------------
+[0.00462 s] survived
+   - [#  80] CRP parser: 
+--------------------------------------------------------------------------------
+  145:                 tag = match.group('tag').lower()
+  146:                 value = match.group('value')
+  147:                 
+  148:                 
+- 149:                 if tag[0] == '#':
++ 149:                 if tag[0] == 'mutpy':
+  150:                     continue
+  151:                 
+  152:                 
+  153:                 if tag == 'changeling':
+--------------------------------------------------------------------------------
+[0.00467 s] survived
+   - [#  81] CRP parser: 
+--------------------------------------------------------------------------------
+  145:                 tag = match.group('tag').lower()
+  146:                 value = match.group('value')
+  147:                 
+  148:                 
+- 149:                 if tag[0] == '#':
++ 149:                 if tag[0] == '':
+  150:                     continue
+  151:                 
+  152:                 
+  153:                 if tag == 'changeling':
+--------------------------------------------------------------------------------
+[0.00465 s] survived
+   - [#  82] CRP parser: 
+--------------------------------------------------------------------------------
+  149:                 if tag[0] == '#':
+  150:                     continue
+  151:                 
+  152:                 
+- 153:                 if tag == 'changeling':
++ 153:                 if tag == 'mutpy':
+  154:                     
+  155:                     bits = value.split(maxsplit=1)
+  156:                     parsed_char.tags('type').append('Changeling')
+  157:                     if len(bits):
+--------------------------------------------------------------------------------
+[0.00467 s] survived
+   - [#  83] CRP parser: 
+--------------------------------------------------------------------------------
+  149:                 if tag[0] == '#':
+  150:                     continue
+  151:                 
+  152:                 
+- 153:                 if tag == 'changeling':
++ 153:                 if tag == '':
+  154:                     
+  155:                     bits = value.split(maxsplit=1)
+  156:                     parsed_char.tags('type').append('Changeling')
+  157:                     if len(bits):
+--------------------------------------------------------------------------------
+[0.00459 s] survived
+   - [#  84] CRP parser: 
+--------------------------------------------------------------------------------
+  151:                 
+  152:                 
+  153:                 if tag == 'changeling':
+  154:                     
+- 155:                     bits = value.split(maxsplit=1)
++ 155:                     bits = value.split(maxsplit=2)
+  156:                     parsed_char.tags('type').append('Changeling')
+  157:                     if len(bits):
+  158:                         parsed_char.tags('seeming').append(bits[0])
+  159:                     if len(bits) > 1:
+--------------------------------------------------------------------------------
+[0.00459 s] survived
+   - [#  85] CRP parser: 
+--------------------------------------------------------------------------------
+  152:                 
+  153:                 if tag == 'changeling':
+  154:                     
+  155:                     bits = value.split(maxsplit=1)
+- 156:                     parsed_char.tags('type').append('Changeling')
++ 156:                     parsed_char.tags('mutpy').append('Changeling')
+  157:                     if len(bits):
+  158:                         parsed_char.tags('seeming').append(bits[0])
+  159:                     if len(bits) > 1:
+  160:                         parsed_char.tags('kith').append(bits[1])
+--------------------------------------------------------------------------------
+[0.00480 s] survived
+   - [#  86] CRP parser: 
+--------------------------------------------------------------------------------
+  152:                 
+  153:                 if tag == 'changeling':
+  154:                     
+  155:                     bits = value.split(maxsplit=1)
+- 156:                     parsed_char.tags('type').append('Changeling')
++ 156:                     parsed_char.tags('').append('Changeling')
+  157:                     if len(bits):
+  158:                         parsed_char.tags('seeming').append(bits[0])
+  159:                     if len(bits) > 1:
+  160:                         parsed_char.tags('kith').append(bits[1])
+--------------------------------------------------------------------------------
+[0.00452 s] survived
+   - [#  87] CRP parser: 
+--------------------------------------------------------------------------------
+  152:                 
+  153:                 if tag == 'changeling':
+  154:                     
+  155:                     bits = value.split(maxsplit=1)
+- 156:                     parsed_char.tags('type').append('Changeling')
++ 156:                     parsed_char.tags('type').append('mutpy')
+  157:                     if len(bits):
+  158:                         parsed_char.tags('seeming').append(bits[0])
+  159:                     if len(bits) > 1:
+  160:                         parsed_char.tags('kith').append(bits[1])
+--------------------------------------------------------------------------------
+[0.00470 s] survived
+   - [#  88] CRP parser: 
+--------------------------------------------------------------------------------
+  152:                 
+  153:                 if tag == 'changeling':
+  154:                     
+  155:                     bits = value.split(maxsplit=1)
+- 156:                     parsed_char.tags('type').append('Changeling')
++ 156:                     parsed_char.tags('type').append('')
+  157:                     if len(bits):
+  158:                         parsed_char.tags('seeming').append(bits[0])
+  159:                     if len(bits) > 1:
+  160:                         parsed_char.tags('kith').append(bits[1])
+--------------------------------------------------------------------------------
+[0.00455 s] survived
+   - [#  89] CRP parser: 
+--------------------------------------------------------------------------------
+  154:                     
+  155:                     bits = value.split(maxsplit=1)
+  156:                     parsed_char.tags('type').append('Changeling')
+  157:                     if len(bits):
+- 158:                         parsed_char.tags('seeming').append(bits[0])
++ 158:                         parsed_char.tags('mutpy').append(bits[0])
+  159:                     if len(bits) > 1:
+  160:                         parsed_char.tags('kith').append(bits[1])
+  161:                     continue
+  162:                 elif tag == 'werewolf':
+--------------------------------------------------------------------------------
+[0.00473 s] survived
+   - [#  90] CRP parser: 
+--------------------------------------------------------------------------------
+  154:                     
+  155:                     bits = value.split(maxsplit=1)
+  156:                     parsed_char.tags('type').append('Changeling')
+  157:                     if len(bits):
+- 158:                         parsed_char.tags('seeming').append(bits[0])
++ 158:                         parsed_char.tags('').append(bits[0])
+  159:                     if len(bits) > 1:
+  160:                         parsed_char.tags('kith').append(bits[1])
+  161:                     continue
+  162:                 elif tag == 'werewolf':
+--------------------------------------------------------------------------------
+[0.00456 s] survived
+   - [#  91] CRP parser: 
+--------------------------------------------------------------------------------
+  154:                     
+  155:                     bits = value.split(maxsplit=1)
+  156:                     parsed_char.tags('type').append('Changeling')
+  157:                     if len(bits):
+- 158:                         parsed_char.tags('seeming').append(bits[0])
++ 158:                         parsed_char.tags('seeming').append(bits[1])
+  159:                     if len(bits) > 1:
+  160:                         parsed_char.tags('kith').append(bits[1])
+  161:                     continue
+  162:                 elif tag == 'werewolf':
+--------------------------------------------------------------------------------
+[0.00460 s] survived
+   - [#  92] CRP parser: 
+--------------------------------------------------------------------------------
+  155:                     bits = value.split(maxsplit=1)
+  156:                     parsed_char.tags('type').append('Changeling')
+  157:                     if len(bits):
+  158:                         parsed_char.tags('seeming').append(bits[0])
+- 159:                     if len(bits) > 1:
++ 159:                     if len(bits) > 2:
+  160:                         parsed_char.tags('kith').append(bits[1])
+  161:                     continue
+  162:                 elif tag == 'werewolf':
+  163:                     parsed_char.tags('type').append('Werewolf')
+--------------------------------------------------------------------------------
+[0.00463 s] survived
+   - [#  93] CRP parser: 
+--------------------------------------------------------------------------------
+  156:                     parsed_char.tags('type').append('Changeling')
+  157:                     if len(bits):
+  158:                         parsed_char.tags('seeming').append(bits[0])
+  159:                     if len(bits) > 1:
+- 160:                         parsed_char.tags('kith').append(bits[1])
++ 160:                         parsed_char.tags('mutpy').append(bits[1])
+  161:                     continue
+  162:                 elif tag == 'werewolf':
+  163:                     parsed_char.tags('type').append('Werewolf')
+  164:                     parsed_char.tags('auspice').append(value)
+--------------------------------------------------------------------------------
+[0.00461 s] survived
+   - [#  94] CRP parser: 
+--------------------------------------------------------------------------------
+  156:                     parsed_char.tags('type').append('Changeling')
+  157:                     if len(bits):
+  158:                         parsed_char.tags('seeming').append(bits[0])
+  159:                     if len(bits) > 1:
+- 160:                         parsed_char.tags('kith').append(bits[1])
++ 160:                         parsed_char.tags('').append(bits[1])
+  161:                     continue
+  162:                 elif tag == 'werewolf':
+  163:                     parsed_char.tags('type').append('Werewolf')
+  164:                     parsed_char.tags('auspice').append(value)
+--------------------------------------------------------------------------------
+[0.00475 s] survived
+   - [#  95] CRP parser: 
+--------------------------------------------------------------------------------
+  156:                     parsed_char.tags('type').append('Changeling')
+  157:                     if len(bits):
+  158:                         parsed_char.tags('seeming').append(bits[0])
+  159:                     if len(bits) > 1:
+- 160:                         parsed_char.tags('kith').append(bits[1])
++ 160:                         parsed_char.tags('kith').append(bits[2])
+  161:                     continue
+  162:                 elif tag == 'werewolf':
+  163:                     parsed_char.tags('type').append('Werewolf')
+  164:                     parsed_char.tags('auspice').append(value)
+--------------------------------------------------------------------------------
+[0.00466 s] survived
+   - [#  96] CRP parser: 
+--------------------------------------------------------------------------------
+  158:                         parsed_char.tags('seeming').append(bits[0])
+  159:                     if len(bits) > 1:
+  160:                         parsed_char.tags('kith').append(bits[1])
+  161:                     continue
+- 162:                 elif tag == 'werewolf':
++ 162:                 elif tag == 'mutpy':
+  163:                     parsed_char.tags('type').append('Werewolf')
+  164:                     parsed_char.tags('auspice').append(value)
+  165:                     continue
+  166:                 
+--------------------------------------------------------------------------------
+[0.00465 s] survived
+   - [#  97] CRP parser: 
+--------------------------------------------------------------------------------
+  158:                         parsed_char.tags('seeming').append(bits[0])
+  159:                     if len(bits) > 1:
+  160:                         parsed_char.tags('kith').append(bits[1])
+  161:                     continue
+- 162:                 elif tag == 'werewolf':
++ 162:                 elif tag == '':
+  163:                     parsed_char.tags('type').append('Werewolf')
+  164:                     parsed_char.tags('auspice').append(value)
+  165:                     continue
+  166:                 
+--------------------------------------------------------------------------------
+[0.00459 s] survived
+   - [#  98] CRP parser: 
+--------------------------------------------------------------------------------
+  159:                     if len(bits) > 1:
+  160:                         parsed_char.tags('kith').append(bits[1])
+  161:                     continue
+  162:                 elif tag == 'werewolf':
+- 163:                     parsed_char.tags('type').append('Werewolf')
++ 163:                     parsed_char.tags('mutpy').append('Werewolf')
+  164:                     parsed_char.tags('auspice').append(value)
+  165:                     continue
+  166:                 
+  167:                 
+--------------------------------------------------------------------------------
+[0.00482 s] survived
+   - [#  99] CRP parser: 
+--------------------------------------------------------------------------------
+  159:                     if len(bits) > 1:
+  160:                         parsed_char.tags('kith').append(bits[1])
+  161:                     continue
+  162:                 elif tag == 'werewolf':
+- 163:                     parsed_char.tags('type').append('Werewolf')
++ 163:                     parsed_char.tags('').append('Werewolf')
+  164:                     parsed_char.tags('auspice').append(value)
+  165:                     continue
+  166:                 
+  167:                 
+--------------------------------------------------------------------------------
+[0.00465 s] survived
+   - [# 100] CRP parser: 
+--------------------------------------------------------------------------------
+  159:                     if len(bits) > 1:
+  160:                         parsed_char.tags('kith').append(bits[1])
+  161:                     continue
+  162:                 elif tag == 'werewolf':
+- 163:                     parsed_char.tags('type').append('Werewolf')
++ 163:                     parsed_char.tags('type').append('mutpy')
+  164:                     parsed_char.tags('auspice').append(value)
+  165:                     continue
+  166:                 
+  167:                 
+--------------------------------------------------------------------------------
+[0.00461 s] survived
+   - [# 101] CRP parser: 
+--------------------------------------------------------------------------------
+  159:                     if len(bits) > 1:
+  160:                         parsed_char.tags('kith').append(bits[1])
+  161:                     continue
+  162:                 elif tag == 'werewolf':
+- 163:                     parsed_char.tags('type').append('Werewolf')
++ 163:                     parsed_char.tags('type').append('')
+  164:                     parsed_char.tags('auspice').append(value)
+  165:                     continue
+  166:                 
+  167:                 
+--------------------------------------------------------------------------------
+[0.00472 s] survived
+   - [# 102] CRP parser: 
+--------------------------------------------------------------------------------
+  160:                         parsed_char.tags('kith').append(bits[1])
+  161:                     continue
+  162:                 elif tag == 'werewolf':
+  163:                     parsed_char.tags('type').append('Werewolf')
+- 164:                     parsed_char.tags('auspice').append(value)
++ 164:                     parsed_char.tags('mutpy').append(value)
+  165:                     continue
+  166:                 
+  167:                 
+  168:                 if tag == 'realname':
+--------------------------------------------------------------------------------
+[0.00455 s] survived
+   - [# 103] CRP parser: 
+--------------------------------------------------------------------------------
+  160:                         parsed_char.tags('kith').append(bits[1])
+  161:                     continue
+  162:                 elif tag == 'werewolf':
+  163:                     parsed_char.tags('type').append('Werewolf')
+- 164:                     parsed_char.tags('auspice').append(value)
++ 164:                     parsed_char.tags('').append(value)
+  165:                     continue
+  166:                 
+  167:                 
+  168:                 if tag == 'realname':
+--------------------------------------------------------------------------------
+[0.00462 s] survived
+   - [# 104] CRP parser: 
+--------------------------------------------------------------------------------
+  164:                     parsed_char.tags('auspice').append(value)
+  165:                     continue
+  166:                 
+  167:                 
+- 168:                 if tag == 'realname':
++ 168:                 if tag == 'mutpy':
+  169:                     parsed_char.tags('name')[0] = value
+  170:                     continue
+  171:                 
+  172:                 
+--------------------------------------------------------------------------------
+[0.00470 s] survived
+   - [# 105] CRP parser: 
+--------------------------------------------------------------------------------
+  164:                     parsed_char.tags('auspice').append(value)
+  165:                     continue
+  166:                 
+  167:                 
+- 168:                 if tag == 'realname':
++ 168:                 if tag == '':
+  169:                     parsed_char.tags('name')[0] = value
+  170:                     continue
+  171:                 
+  172:                 
+--------------------------------------------------------------------------------
+[0.00461 s] survived
+   - [# 106] CRP parser: 
+--------------------------------------------------------------------------------
+  165:                     continue
+  166:                 
+  167:                 
+  168:                 if tag == 'realname':
+- 169:                     parsed_char.tags('name')[0] = value
++ 169:                     parsed_char.tags('mutpy')[0] = value
+  170:                     continue
+  171:                 
+  172:                 
+  173:                 if parsed_char.tags(tag).subtag_name:
+--------------------------------------------------------------------------------
+[0.00454 s] survived
+   - [# 107] CRP parser: 
+--------------------------------------------------------------------------------
+  165:                     continue
+  166:                 
+  167:                 
+  168:                 if tag == 'realname':
+- 169:                     parsed_char.tags('name')[0] = value
++ 169:                     parsed_char.tags('')[0] = value
+  170:                     continue
+  171:                 
+  172:                 
+  173:                 if parsed_char.tags(tag).subtag_name:
+--------------------------------------------------------------------------------
+[0.00462 s] survived
+   - [# 108] CRP parser: 
+--------------------------------------------------------------------------------
+  165:                     continue
+  166:                 
+  167:                 
+  168:                 if tag == 'realname':
+- 169:                     parsed_char.tags('name')[0] = value
++ 169:                     parsed_char.tags('name')[1] = value
+  170:                     continue
+  171:                 
+  172:                 
+  173:                 if parsed_char.tags(tag).subtag_name:
+--------------------------------------------------------------------------------
+[0.00468 s] survived
+   - [# 109] CRP parser: 
+--------------------------------------------------------------------------------
+  177:                     parsed_char.tags(supertag)[supervalue].append(value)
+  178:                     continue
+  179:                 
+  180:                 
+- 181:                 if tag == 'hide':
++ 181:                 if tag == 'mutpy':
+  182:                     parts = HIDE_RE.split(value)
+  183:                     
+  184:                     tagname = parts.pop(0)
+  185:                     if not parts:
+--------------------------------------------------------------------------------
+[0.00469 s] survived
+   - [# 110] CRP parser: 
+--------------------------------------------------------------------------------
+  177:                     parsed_char.tags(supertag)[supervalue].append(value)
+  178:                     continue
+  179:                 
+  180:                 
+- 181:                 if tag == 'hide':
++ 181:                 if tag == '':
+  182:                     parts = HIDE_RE.split(value)
+  183:                     
+  184:                     tagname = parts.pop(0)
+  185:                     if not parts:
+--------------------------------------------------------------------------------
+[0.00463 s] survived
+   - [# 111] CRP parser: 
+--------------------------------------------------------------------------------
+  180:                 
+  181:                 if tag == 'hide':
+  182:                     parts = HIDE_RE.split(value)
+  183:                     
+- 184:                     tagname = parts.pop(0)
++ 184:                     tagname = parts.pop(1)
+  185:                     if not parts:
+  186:                         parsed_char.tags(tagname).hidden = True
+  187:                         continue
+  188:                     
+--------------------------------------------------------------------------------
+[0.00483 s] survived
+   - [# 112] CRP parser: 
+--------------------------------------------------------------------------------
+  185:                     if not parts:
+  186:                         parsed_char.tags(tagname).hidden = True
+  187:                         continue
+  188:                     
+- 189:                     first_value = parts.pop(0)
++ 189:                     first_value = parts.pop(1)
+  190:                     if not parts:
+  191:                         parsed_char.tags(tagname).hide_value(first_value)
+  192:                         continue
+  193:                     
+--------------------------------------------------------------------------------
+[0.00470 s] survived
+   - [# 113] CRP parser: 
+--------------------------------------------------------------------------------
+  190:                     if not parts:
+  191:                         parsed_char.tags(tagname).hide_value(first_value)
+  192:                         continue
+  193:                     
+- 194:                     second_value = parts.pop(0)
++ 194:                     second_value = parts.pop(1)
+  195:                     if not parts:
+  196:                         if second_value == 'subtags':
+  197:                             parsed_char.tags(tagname).subtag(first_value).hidden = True
+  198:                         else:
+--------------------------------------------------------------------------------
+[0.00466 s] survived
+   - [# 114] CRP parser: 
+--------------------------------------------------------------------------------
+  192:                         continue
+  193:                     
+  194:                     second_value = parts.pop(0)
+  195:                     if not parts:
+- 196:                         if second_value == 'subtags':
++ 196:                         if second_value == 'mutpy':
+  197:                             parsed_char.tags(tagname).subtag(first_value).hidden = True
+  198:                         else:
+  199:                             parsed_char.tags(tagname).subtag(first_value).hide_value(second_value)
+  200:                         continue
+--------------------------------------------------------------------------------
+[0.00466 s] survived
+   - [# 115] CRP parser: 
+--------------------------------------------------------------------------------
+  192:                         continue
+  193:                     
+  194:                     second_value = parts.pop(0)
+  195:                     if not parts:
+- 196:                         if second_value == 'subtags':
++ 196:                         if second_value == '':
+  197:                             parsed_char.tags(tagname).subtag(first_value).hidden = True
+  198:                         else:
+  199:                             parsed_char.tags(tagname).subtag(first_value).hide_value(second_value)
+  200:                         continue
+--------------------------------------------------------------------------------
+[0.00474 s] survived
+   - [# 116] CRP parser: 
+--------------------------------------------------------------------------------
+  204:                     parsed_char.tags(value).hidden = True
+  205:                     continue
+  206:                 
+  207:                 if tag in DEPRECATED_TAGS:
+- 208:                     print_err("The tag '{}' in `{}` is deprecated and will stop working in the future".format(tag, char_file_path))
++ 208:                     print_err('mutpy'.format(tag, char_file_path))
+  209:                 
+  210:                 parsed_char.tags(tag).append(value)
+  211:             else:
+  212:                 
+--------------------------------------------------------------------------------
+[0.00486 s] survived
+   - [# 117] CRP parser: 
+--------------------------------------------------------------------------------
+  204:                     parsed_char.tags(value).hidden = True
+  205:                     continue
+  206:                 
+  207:                 if tag in DEPRECATED_TAGS:
+- 208:                     print_err("The tag '{}' in `{}` is deprecated and will stop working in the future".format(tag, char_file_path))
++ 208:                     print_err(''.format(tag, char_file_path))
+  209:                 
+  210:                 parsed_char.tags(tag).append(value)
+  211:             else:
+  212:                 
+--------------------------------------------------------------------------------
+[0.00479 s] survived
+   - [# 118] CRP parser: 
+--------------------------------------------------------------------------------
+  209:                 
+  210:                 parsed_char.tags(tag).append(value)
+  211:             else:
+  212:                 
+- 213:                 if line == '\n':
++ 213:                 if line == 'mutpy':
+  214:                     if previous_line_empty:
+  215:                         continue
+  216:                     else:
+  217:                         previous_line_empty = True
+--------------------------------------------------------------------------------
+[0.00461 s] survived
+   - [# 119] CRP parser: 
+--------------------------------------------------------------------------------
+  209:                 
+  210:                 parsed_char.tags(tag).append(value)
+  211:             else:
+  212:                 
+- 213:                 if line == '\n':
++ 213:                 if line == '':
+  214:                     if previous_line_empty:
+  215:                         continue
+  216:                     else:
+  217:                         previous_line_empty = True
+--------------------------------------------------------------------------------
+[0.00470 s] survived
+   - [# 120] CRP parser: 
+--------------------------------------------------------------------------------
+  218:                 else:
+  219:                     previous_line_empty = False
+  220:                 
+  221:                 
+- 222:                 parsed_char.tags('description').append(line.strip())
++ 222:                 parsed_char.tags('mutpy').append(line.strip())
+  223:                 continue
+  224:     
+  225:     return character.build(other_char=parsed_char)
+--------------------------------------------------------------------------------
+[0.00468 s] survived
+   - [# 121] CRP parser: 
+--------------------------------------------------------------------------------
+  218:                 else:
+  219:                     previous_line_empty = False
+  220:                 
+  221:                 
+- 222:                 parsed_char.tags('description').append(line.strip())
++ 222:                 parsed_char.tags('').append(line.strip())
+  223:                 continue
+  224:     
+  225:     return character.build(other_char=parsed_char)
+--------------------------------------------------------------------------------
+[0.00474 s] survived
+   - [# 122] LCR parser: 
+--------------------------------------------------------------------------------
+   70:             if target_path in ignore_paths:
+   71:                 
+   72:                 continue
+   73:             (_, ext) = path.splitext(name)
+-  74:             if (ext in VALID_EXTENSIONS or (include_bare and not ext)):
++  74:             if (ext in VALID_EXTENSIONS and (include_bare and not ext)):
+   75:                 data = parse_character(target_path)
+   76:                 characters.append(data)
+   77:     return characters
+   78: 
+--------------------------------------------------------------------------------
+[0.00463 s] survived
+   - [# 123] LCR parser: 
+--------------------------------------------------------------------------------
+   70:             if target_path in ignore_paths:
+   71:                 
+   72:                 continue
+   73:             (_, ext) = path.splitext(name)
+-  74:             if (ext in VALID_EXTENSIONS or (include_bare and not ext)):
++  74:             if (ext in VALID_EXTENSIONS or (include_bare or not ext)):
+   75:                 data = parse_character(target_path)
+   76:                 characters.append(data)
+   77:     return characters
+   78: 
+--------------------------------------------------------------------------------
+[0.00436 s] survived
+   - [# 124] LCR parser: 
+--------------------------------------------------------------------------------
+  100: 
+  101:         Returns:
+  102:             True if d should be searched, false if it should be ignored
+  103:         '''
+- 104:         return (base not in ignore and \
++ 104:         return (base not in ignore or \
+  105:             path.join(base, check) not in ignore)
+  106:     
+  107:     for (dirpath, dirnames, filenames) in walk(root, followlinks=True):
+  108:         dirnames[:] = [d for d in dirnames if should_search(dirpath, d)]
+--------------------------------------------------------------------------------
+[0.00471 s] survived
+   - [# 125] ROR parser: 
+--------------------------------------------------------------------------------
+  145:                 tag = match.group('tag').lower()
+  146:                 value = match.group('value')
+  147:                 
+  148:                 
+- 149:                 if tag[0] == '#':
++ 149:                 if tag[0] != '#':
+  150:                     continue
+  151:                 
+  152:                 
+  153:                 if tag == 'changeling':
+--------------------------------------------------------------------------------
+[0.00447 s] survived
+   - [# 126] ROR parser: 
+--------------------------------------------------------------------------------
+  149:                 if tag[0] == '#':
+  150:                     continue
+  151:                 
+  152:                 
+- 153:                 if tag == 'changeling':
++ 153:                 if tag != 'changeling':
+  154:                     
+  155:                     bits = value.split(maxsplit=1)
+  156:                     parsed_char.tags('type').append('Changeling')
+  157:                     if len(bits):
+--------------------------------------------------------------------------------
+[0.00462 s] survived
+   - [# 127] ROR parser: 
+--------------------------------------------------------------------------------
+  155:                     bits = value.split(maxsplit=1)
+  156:                     parsed_char.tags('type').append('Changeling')
+  157:                     if len(bits):
+  158:                         parsed_char.tags('seeming').append(bits[0])
+- 159:                     if len(bits) > 1:
++ 159:                     if len(bits) < 1:
+  160:                         parsed_char.tags('kith').append(bits[1])
+  161:                     continue
+  162:                 elif tag == 'werewolf':
+  163:                     parsed_char.tags('type').append('Werewolf')
+--------------------------------------------------------------------------------
+[0.00480 s] survived
+   - [# 128] ROR parser: 
+--------------------------------------------------------------------------------
+  155:                     bits = value.split(maxsplit=1)
+  156:                     parsed_char.tags('type').append('Changeling')
+  157:                     if len(bits):
+  158:                         parsed_char.tags('seeming').append(bits[0])
+- 159:                     if len(bits) > 1:
++ 159:                     if len(bits) >= 1:
+  160:                         parsed_char.tags('kith').append(bits[1])
+  161:                     continue
+  162:                 elif tag == 'werewolf':
+  163:                     parsed_char.tags('type').append('Werewolf')
+--------------------------------------------------------------------------------
+[0.00464 s] survived
+   - [# 129] ROR parser: 
+--------------------------------------------------------------------------------
+  158:                         parsed_char.tags('seeming').append(bits[0])
+  159:                     if len(bits) > 1:
+  160:                         parsed_char.tags('kith').append(bits[1])
+  161:                     continue
+- 162:                 elif tag == 'werewolf':
++ 162:                 elif tag != 'werewolf':
+  163:                     parsed_char.tags('type').append('Werewolf')
+  164:                     parsed_char.tags('auspice').append(value)
+  165:                     continue
+  166:                 
+--------------------------------------------------------------------------------
+[0.00457 s] survived
+   - [# 130] ROR parser: 
+--------------------------------------------------------------------------------
+  164:                     parsed_char.tags('auspice').append(value)
+  165:                     continue
+  166:                 
+  167:                 
+- 168:                 if tag == 'realname':
++ 168:                 if tag != 'realname':
+  169:                     parsed_char.tags('name')[0] = value
+  170:                     continue
+  171:                 
+  172:                 
+--------------------------------------------------------------------------------
+[0.00472 s] survived
+   - [# 131] ROR parser: 
+--------------------------------------------------------------------------------
+  177:                     parsed_char.tags(supertag)[supervalue].append(value)
+  178:                     continue
+  179:                 
+  180:                 
+- 181:                 if tag == 'hide':
++ 181:                 if tag != 'hide':
+  182:                     parts = HIDE_RE.split(value)
+  183:                     
+  184:                     tagname = parts.pop(0)
+  185:                     if not parts:
+--------------------------------------------------------------------------------
+[0.00458 s] survived
+   - [# 132] ROR parser: 
+--------------------------------------------------------------------------------
+  192:                         continue
+  193:                     
+  194:                     second_value = parts.pop(0)
+  195:                     if not parts:
+- 196:                         if second_value == 'subtags':
++ 196:                         if second_value != 'subtags':
+  197:                             parsed_char.tags(tagname).subtag(first_value).hidden = True
+  198:                         else:
+  199:                             parsed_char.tags(tagname).subtag(first_value).hide_value(second_value)
+  200:                         continue
+--------------------------------------------------------------------------------
+[0.00467 s] survived
+   - [# 133] ROR parser: 
+--------------------------------------------------------------------------------
+  209:                 
+  210:                 parsed_char.tags(tag).append(value)
+  211:             else:
+  212:                 
+- 213:                 if line == '\n':
++ 213:                 if line != '\n':
+  214:                     if previous_line_empty:
+  215:                         continue
+  216:                     else:
+  217:                         previous_line_empty = True
+--------------------------------------------------------------------------------
+[0.00452 s] survived
+[*] Mutation score [11.76142 s]: 0.0%
+   - all: 133
+   - killed: 0 (0.0%)
+   - survived: 133 (100.0%)
+   - incompetent: 0 (0.0%)
+   - timeout: 0 (0.0%)
