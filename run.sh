@@ -23,13 +23,13 @@ then
 #runs the mutex tests for test_parser and makes an html report
 elif [[ "$1" == "-rh" ]];
 then
-    mut.py --target npc/parser.py --unit-test tests/test_parser.py --report-html mutpy_report/
+    mut.py --target npc/parser.py --unit-test tests/test_parser.py --runner pytest --report-html mutpy_report/
 #runs the mutex tests for test_parser and returns the results to a text
 #file in mutpy_report as result.txt
 elif [[ "$1" == "-rm" ]];
 then
     echo "Writing report..."
-    mut.py --target npc/parser.py --unit-test tests/test_parser.py -m > "mutpy_report/result.txt"
+    mut.py --target npc/parser.py --unit-test tests/test_parser.py -runner pytest -m > "mutpy_report/result.txt"
     echo "Report complete."
 else
     echo "Command not found."
