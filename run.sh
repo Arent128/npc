@@ -6,8 +6,9 @@ then
     echo "Usage:"
     echo "-r    Runs the test for parser"
     echo "-c    Runs test coverage for parser"
-    echo "-rh   Runs mutex coverage for parser and makes a html report"
-    echo "-rm   Runs the mutex report for parser and makes a text report"
+    echo "-rh   Runs mutant coverage for parser and makes a html report"
+    echo "-rm   Runs the mutant report for parser and makes a text report"
+    echo "-mm   Runs mutmut and makes the report"
 elif [[ "$1" == "-r" ]];
 then
     pytest tests/test_parser.py
@@ -31,6 +32,12 @@ then
     echo "Writing report..."
     mut.py --target npc/parser.py --unit-test tests/test_parser.py --runner pytest -m > "mutpy_report/result.txt"
     echo "Report complete."
+elif [[ "$1" == "-mm" ]];
+then
+    [ -d "mutmut_report" ] || mkdir mutmut_report
+    [ -f ".mutmut_cache" ] && rm .mutmut-cache;
+    mutmut run --paths-to-mutate npc/parser.py
+    mutmut junitxml > mutmut_report/report.xml
 else
     echo "Command not found."
     echo "use -h for help."

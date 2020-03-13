@@ -169,11 +169,12 @@ class TestHiding:
         c = character('Hidden Tags.nwod')
         assert c.tags('group').subtag('Seamen').hidden_values == ['Rower']
     
+class TestMutations:
     def test_ignore_type(self):
         parseables = fixture_dir('parsing', 'characters', 'Changelings')
         testPath = fixture_dir('parsing', 'characters', 'Changelings')
         characters = npc.parser.get_characters(search_paths=[parseables], ignore_paths=[testPath])
-        assert len(list(characters)) == 5
+        assert len(list(characters)) == 7
     def test_no_ext(self):
         #search_paths = []
         parseables = fixture_dir('parsing', 'characters', 'Changelings', 'Frank Dickens.jrg')

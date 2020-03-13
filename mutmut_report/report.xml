@@ -1,0 +1,762 @@
+<?xml version="1.0" ?>
+<testsuites disabled="0" errors="0" failures="33" tests="120" time="0.0">
+	<testsuite disabled="0" errors="0" failures="33" name="mutmut" skipped="0" tests="120" time="0">
+		<testcase file="npc/parser.py" line="14" name="Mutant #1">
+			<system-out>VALID_EXTENSIONS = ('.nwod', '.dnd3', '.dfrpg')</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="14" name="Mutant #2">
+			<system-out>VALID_EXTENSIONS = ('.nwod', '.dnd3', '.dfrpg')</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="14" name="Mutant #3">
+			<system-out>VALID_EXTENSIONS = ('.nwod', '.dnd3', '.dfrpg')</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="14" name="Mutant #4">
+			<system-out>VALID_EXTENSIONS = ('.nwod', '.dnd3', '.dfrpg')</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="17" name="Mutant #5">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -15,7 +15,7 @@
+ VALID_EXTENSIONS = ('.nwod', '.dnd3', '.dfrpg')
+ &quot;&quot;&quot;tuple: file extensions that should be parsed&quot;&quot;&quot;
+ 
+-DEPRECATED_TAGS = ('hidegroup', 'hideranks')
++DEPRECATED_TAGS = ('XXhidegroupXX', 'hideranks')
+ 
+ SECTION_RE = re.compile(r'^--.+--\s*$')
+ TAG_RE = re.compile(r'^@(?P&lt;tag&gt;#\w+|\w+)\s+(?P&lt;value&gt;.*)$')
+</failure>
+			<system-out>DEPRECATED_TAGS = ('hidegroup', 'hideranks')</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="17" name="Mutant #6">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -15,7 +15,7 @@
+ VALID_EXTENSIONS = ('.nwod', '.dnd3', '.dfrpg')
+ &quot;&quot;&quot;tuple: file extensions that should be parsed&quot;&quot;&quot;
+ 
+-DEPRECATED_TAGS = ('hidegroup', 'hideranks')
++DEPRECATED_TAGS = ('hidegroup', 'XXhideranksXX')
+ 
+ SECTION_RE = re.compile(r'^--.+--\s*$')
+ TAG_RE = re.compile(r'^@(?P&lt;tag&gt;#\w+|\w+)\s+(?P&lt;value&gt;.*)$')
+</failure>
+			<system-out>DEPRECATED_TAGS = ('hidegroup', 'hideranks')</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="17" name="Mutant #7">
+			<system-out>DEPRECATED_TAGS = ('hidegroup', 'hideranks')</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="19" name="Mutant #8">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -17,7 +17,7 @@
+ 
+ DEPRECATED_TAGS = ('hidegroup', 'hideranks')
+ 
+-SECTION_RE = re.compile(r'^--.+--\s*$')
++SECTION_RE = re.compile(r'XX^--.+--\s*$XX')
+ TAG_RE = re.compile(r'^@(?P&lt;tag&gt;#\w+|\w+)\s+(?P&lt;value&gt;.*)$')
+ HIDE_RE = re.compile(r'\s*&gt;&gt;\s*')
+ 
+</failure>
+			<system-out>SECTION_RE = re.compile(r'^--.+--\s*$')</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="19" name="Mutant #9">
+			<system-out>SECTION_RE = re.compile(r'^--.+--\s*$')</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="20" name="Mutant #10">
+			<system-out>TAG_RE = re.compile(r'^@(?P&lt;tag&gt;#\w+|\w+)\s+(?P&lt;value&gt;.*)$')</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="20" name="Mutant #11">
+			<system-out>TAG_RE = re.compile(r'^@(?P&lt;tag&gt;#\w+|\w+)\s+(?P&lt;value&gt;.*)$')</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="21" name="Mutant #12">
+			<system-out>HIDE_RE = re.compile(r'\s*&gt;&gt;\s*')</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="21" name="Mutant #13">
+			<system-out>HIDE_RE = re.compile(r'\s*&gt;&gt;\s*')</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="37" name="Mutant #14">
+			<system-out>    if search_paths is None:</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="38" name="Mutant #15">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -36,7 +36,7 @@
+         every path of search_paths, but not in ignore_paths.
+     &quot;&quot;&quot;
+     if search_paths is None:
+-        search_paths = ['.']
++        search_paths = ['XX.XX']
+ 
+     if ignore_paths:
+         ignore_paths[:] = [path.normpath(d) for d in ignore_paths]
+</failure>
+			<system-out>        search_paths = ['.']</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="38" name="Mutant #16">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -36,7 +36,7 @@
+         every path of search_paths, but not in ignore_paths.
+     &quot;&quot;&quot;
+     if search_paths is None:
+-        search_paths = ['.']
++        search_paths = None
+ 
+     if ignore_paths:
+         ignore_paths[:] = [path.normpath(d) for d in ignore_paths]
+</failure>
+			<system-out>        search_paths = ['.']</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="41" name="Mutant #17">
+			<system-out>        ignore_paths[:] = [path.normpath(d) for d in ignore_paths]</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="45" name="Mutant #18">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -43,7 +43,7 @@
+ 
+     return itertools.chain.from_iterable((_parse_path(path, ignore_paths) for path in search_paths))
+ 
+-def _parse_path(start_path, ignore_paths=None, include_bare=False):
++def _parse_path(start_path, ignore_paths=None, include_bare=True):
+     &quot;&quot;&quot;
+     Parse all the character files under a directory
+ 
+</failure>
+			<system-out>def _parse_path(start_path, ignore_paths=None, include_bare=False):</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="62" name="Mutant #19">
+			<system-out>    if ignore_paths is None:</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="63" name="Mutant #20">
+			<system-out>        ignore_paths = []</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="65" name="Mutant #21">
+			<system-out>    characters = []</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="68" name="Mutant #22">
+			<system-out>            target_path = path.join(dirpath, name)</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="69" name="Mutant #23">
+			<system-out>            if target_path in ignore_paths:</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="71" name="Mutant #24">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -69,7 +69,7 @@
+             target_path = path.join(dirpath, name)
+             if target_path in ignore_paths:
+                 # skip ignored files
+-                continue
++                break
+             _, ext = path.splitext(name)
+             if ext in VALID_EXTENSIONS or (include_bare and not ext):
+                 data = parse_character(target_path)
+</failure>
+			<system-out>                continue</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="72" name="Mutant #25">
+			<system-out>            _, ext = path.splitext(name)</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="73" name="Mutant #26">
+			<system-out>            if ext in VALID_EXTENSIONS or (include_bare and not ext):</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="73" name="Mutant #27">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -71,7 +71,7 @@
+                 # skip ignored files
+                 continue
+             _, ext = path.splitext(name)
+-            if ext in VALID_EXTENSIONS or (include_bare and not ext):
++            if ext in VALID_EXTENSIONS or (include_bare and  ext):
+                 data = parse_character(target_path)
+                 characters.append(data)
+     return characters
+</failure>
+			<system-out>            if ext in VALID_EXTENSIONS or (include_bare and not ext):</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="73" name="Mutant #28">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -71,7 +71,7 @@
+                 # skip ignored files
+                 continue
+             _, ext = path.splitext(name)
+-            if ext in VALID_EXTENSIONS or (include_bare and not ext):
++            if ext in VALID_EXTENSIONS or (include_bare or not ext):
+                 data = parse_character(target_path)
+                 characters.append(data)
+     return characters
+</failure>
+			<system-out>            if ext in VALID_EXTENSIONS or (include_bare and not ext):</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="73" name="Mutant #29">
+			<system-out>            if ext in VALID_EXTENSIONS or (include_bare and not ext):</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="74" name="Mutant #30">
+			<system-out>                data = parse_character(target_path)</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="103" name="Mutant #31">
+			<system-out>        return base not in ignore \</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="104" name="Mutant #32">
+			<system-out>            and path.join(base, check) not in ignore</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="104" name="Mutant #33">
+			<system-out>            and path.join(base, check) not in ignore</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="106" name="Mutant #34">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -104,7 +104,7 @@
+         return base not in ignore \
+             and path.join(base, check) not in ignore
+ 
+-    for dirpath, dirnames, filenames in walk(root, followlinks=True):
++    for dirpath, dirnames, filenames in walk(root, followlinks=False):
+         dirnames[:] = [d for d in dirnames if should_search(dirpath, d)]
+         yield dirpath, dirnames, filenames
+ 
+</failure>
+			<system-out>    for dirpath, dirnames, filenames in walk(root, followlinks=True):</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="107" name="Mutant #35">
+			<system-out>        dirnames[:] = [d for d in dirnames if should_search(dirpath, d)]</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="124" name="Mutant #36">
+			<system-out>    basename = path.basename(char_file_path)</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="125" name="Mutant #37">
+			<system-out>    name = path.splitext(basename)[0].split(' - ', 1)[0]</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="125" name="Mutant #38">
+			<system-out>    name = path.splitext(basename)[0].split(' - ', 1)[0]</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="125" name="Mutant #39">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -123,7 +123,7 @@
+ 
+     # derive character name from basename
+     basename = path.basename(char_file_path)
+-    name = path.splitext(basename)[0].split(' - ', 1)[0]
++    name = path.splitext(basename)[0].split(' - ', 2)[0]
+ 
+     # instantiate new character
+     parsed_char = character.Character(
+</failure>
+			<system-out>    name = path.splitext(basename)[0].split(' - ', 1)[0]</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="125" name="Mutant #40">
+			<system-out>    name = path.splitext(basename)[0].split(' - ', 1)[0]</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="125" name="Mutant #41">
+			<system-out>    name = path.splitext(basename)[0].split(' - ', 1)[0]</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="131" name="Mutant #42">
+			<system-out>    )</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="133" name="Mutant #43">
+			<system-out>    with open(char_file_path, 'r') as char_file:</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="134" name="Mutant #44">
+			<system-out>        subtag_registry = {}</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="135" name="Mutant #45">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -133,7 +133,7 @@
+ 
+     with open(char_file_path, 'r') as char_file:
+         subtag_registry = {}
+-        previous_line_empty = False
++        previous_line_empty = True
+ 
+         for line in char_file:
+             # stop processing once we see game stats
+</failure>
+			<system-out>        previous_line_empty = False</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="135" name="Mutant #46">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -133,7 +133,7 @@
+ 
+     with open(char_file_path, 'r') as char_file:
+         subtag_registry = {}
+-        previous_line_empty = False
++        previous_line_empty = None
+ 
+         for line in char_file:
+             # stop processing once we see game stats
+</failure>
+			<system-out>        previous_line_empty = False</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="140" name="Mutant #47">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -138,7 +138,7 @@
+         for line in char_file:
+             # stop processing once we see game stats
+             if SECTION_RE.match(line):
+-                break
++                continue
+ 
+             match = TAG_RE.match(line)
+             if match:
+</failure>
+			<system-out>                break</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="142" name="Mutant #48">
+			<system-out>            match = TAG_RE.match(line)</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="144" name="Mutant #49">
+			<system-out>                tag = match.group('tag').lower()</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="144" name="Mutant #50">
+			<system-out>                tag = match.group('tag').lower()</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="145" name="Mutant #51">
+			<system-out>                value = match.group('value')</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="145" name="Mutant #52">
+			<system-out>                value = match.group('value')</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="148" name="Mutant #53">
+			<system-out>                if tag[0] == '#':</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="148" name="Mutant #54">
+			<system-out>                if tag[0] == '#':</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="148" name="Mutant #55">
+			<system-out>                if tag[0] == '#':</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="149" name="Mutant #56">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -147,7 +147,7 @@
+ 
+                 # skip comment tags
+                 if tag[0] == '#':
+-                    continue
++                    break
+ 
+                 # handle compound tags
+                 if tag == 'changeling':
+</failure>
+			<system-out>                    continue</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="152" name="Mutant #57">
+			<system-out>                if tag == 'changeling':</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="152" name="Mutant #58">
+			<system-out>                if tag == 'changeling':</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="154" name="Mutant #59">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -152,7 +152,7 @@
+                 # handle compound tags
+                 if tag == 'changeling':
+                     # grab attributes from compound tag
+-                    bits = value.split(maxsplit=1)
++                    bits = value.split(maxsplit=2)
+                     parsed_char.tags('type').append('Changeling')
+                     if len(bits):
+                         parsed_char.tags('seeming').append(bits[0])
+</failure>
+			<system-out>                    bits = value.split(maxsplit=1)</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="154" name="Mutant #60">
+			<system-out>                    bits = value.split(maxsplit=1)</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="155" name="Mutant #61">
+			<system-out>                    parsed_char.tags('type').append('Changeling')</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="155" name="Mutant #62">
+			<system-out>                    parsed_char.tags('type').append('Changeling')</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="157" name="Mutant #63">
+			<system-out>                        parsed_char.tags('seeming').append(bits[0])</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="157" name="Mutant #64">
+			<system-out>                        parsed_char.tags('seeming').append(bits[0])</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="158" name="Mutant #65">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -156,7 +156,7 @@
+                     parsed_char.tags('type').append('Changeling')
+                     if len(bits):
+                         parsed_char.tags('seeming').append(bits[0])
+-                    if len(bits) &gt; 1:
++                    if len(bits) &gt;= 1:
+                         parsed_char.tags('kith').append(bits[1])
+                     continue
+                 elif tag == 'werewolf':
+</failure>
+			<system-out>                    if len(bits) &gt; 1:</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="158" name="Mutant #66">
+			<system-out>                    if len(bits) &gt; 1:</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="159" name="Mutant #67">
+			<system-out>                        parsed_char.tags('kith').append(bits[1])</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="159" name="Mutant #68">
+			<system-out>                        parsed_char.tags('kith').append(bits[1])</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="160" name="Mutant #69">
+			<system-out>                    continue</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="161" name="Mutant #70">
+			<system-out>                elif tag == 'werewolf':</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="161" name="Mutant #71">
+			<system-out>                elif tag == 'werewolf':</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="162" name="Mutant #72">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -160,7 +160,7 @@
+                         parsed_char.tags('kith').append(bits[1])
+                     continue
+                 elif tag == 'werewolf':
+-                    parsed_char.tags('type').append('Werewolf')
++                    parsed_char.tags('XXtypeXX').append('Werewolf')
+                     parsed_char.tags('auspice').append(value)
+                     continue
+ 
+</failure>
+			<system-out>                    parsed_char.tags('type').append('Werewolf')</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="162" name="Mutant #73">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -160,7 +160,7 @@
+                         parsed_char.tags('kith').append(bits[1])
+                     continue
+                 elif tag == 'werewolf':
+-                    parsed_char.tags('type').append('Werewolf')
++                    parsed_char.tags('type').append('XXWerewolfXX')
+                     parsed_char.tags('auspice').append(value)
+                     continue
+ 
+</failure>
+			<system-out>                    parsed_char.tags('type').append('Werewolf')</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="163" name="Mutant #74">
+			<system-out>                    parsed_char.tags('auspice').append(value)</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="164" name="Mutant #75">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -162,7 +162,7 @@
+                 elif tag == 'werewolf':
+                     parsed_char.tags('type').append('Werewolf')
+                     parsed_char.tags('auspice').append(value)
+-                    continue
++                    break
+ 
+                 # replace first name
+                 if tag == 'realname':
+</failure>
+			<system-out>                    continue</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="167" name="Mutant #76">
+			<system-out>                if tag == 'realname':</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="167" name="Mutant #77">
+			<system-out>                if tag == 'realname':</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="168" name="Mutant #78">
+			<system-out>                    parsed_char.tags('name')[0] = value</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="168" name="Mutant #79">
+			<system-out>                    parsed_char.tags('name')[0] = value</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="168" name="Mutant #80">
+			<system-out>                    parsed_char.tags('name')[0] = value</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="169" name="Mutant #81">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -167,7 +167,7 @@
+                 # replace first name
+                 if tag == 'realname':
+                     parsed_char.tags('name')[0] = value
+-                    continue
++                    break
+ 
+                 # handle rank logic for group tags
+                 if parsed_char.tags(tag).subtag_name:
+</failure>
+			<system-out>                    continue</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="173" name="Mutant #82">
+			<system-out>                    subtag_registry[parsed_char.tags(tag).subtag_name] = (tag, value)</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="174" name="Mutant #83">
+			<system-out>                if tag in subtag_registry:</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="175" name="Mutant #84">
+			<system-out>                    supertag, supervalue = subtag_registry[tag]</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="177" name="Mutant #85">
+			<system-out>                    continue</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="180" name="Mutant #86">
+			<system-out>                if tag == 'hide':</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="180" name="Mutant #87">
+			<system-out>                if tag == 'hide':</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="181" name="Mutant #88">
+			<system-out>                    parts = HIDE_RE.split(value)</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="183" name="Mutant #89">
+			<system-out>                    tagname = parts.pop(0)</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="183" name="Mutant #90">
+			<system-out>                    tagname = parts.pop(0)</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="184" name="Mutant #91">
+			<system-out>                    if not parts:</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="185" name="Mutant #92">
+			<system-out>                        parsed_char.tags(tagname).hidden = True</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="185" name="Mutant #93">
+			<system-out>                        parsed_char.tags(tagname).hidden = True</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="186" name="Mutant #94">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -184,7 +184,7 @@
+                     tagname = parts.pop(0)
+                     if not parts:
+                         parsed_char.tags(tagname).hidden = True
+-                        continue
++                        break
+ 
+                     first_value = parts.pop(0)
+                     if not parts:
+</failure>
+			<system-out>                        continue</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="188" name="Mutant #95">
+			<system-out>                    first_value = parts.pop(0)</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="188" name="Mutant #96">
+			<system-out>                    first_value = parts.pop(0)</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="189" name="Mutant #97">
+			<system-out>                    if not parts:</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="191" name="Mutant #98">
+			<system-out>                        continue</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="193" name="Mutant #99">
+			<system-out>                    second_value = parts.pop(0)</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="193" name="Mutant #100">
+			<system-out>                    second_value = parts.pop(0)</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="194" name="Mutant #101">
+			<system-out>                    if not parts:</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="195" name="Mutant #102">
+			<system-out>                        if second_value == 'subtags':</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="195" name="Mutant #103">
+			<system-out>                        if second_value == 'subtags':</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="196" name="Mutant #104">
+			<system-out>                            parsed_char.tags(tagname).subtag(first_value).hidden = True</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="196" name="Mutant #105">
+			<system-out>                            parsed_char.tags(tagname).subtag(first_value).hidden = True</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="199" name="Mutant #106">
+			<system-out>                        continue</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="203" name="Mutant #107">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -201,7 +201,7 @@
+ 
+                     # If we can't parse the hide string, hide the whole thing as
+                     # a tag and let the Character object deal with it.
+-                    parsed_char.tags(value).hidden = True
++                    parsed_char.tags(value).hidden = False
+                     continue
+ 
+                 if tag in DEPRECATED_TAGS:
+</failure>
+			<system-out>                    parsed_char.tags(value).hidden = True</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="203" name="Mutant #108">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -201,7 +201,7 @@
+ 
+                     # If we can't parse the hide string, hide the whole thing as
+                     # a tag and let the Character object deal with it.
+-                    parsed_char.tags(value).hidden = True
++                    parsed_char.tags(value).hidden = None
+                     continue
+ 
+                 if tag in DEPRECATED_TAGS:
+</failure>
+			<system-out>                    parsed_char.tags(value).hidden = True</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="204" name="Mutant #109">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -202,7 +202,7 @@
+                     # If we can't parse the hide string, hide the whole thing as
+                     # a tag and let the Character object deal with it.
+                     parsed_char.tags(value).hidden = True
+-                    continue
++                    break
+ 
+                 if tag in DEPRECATED_TAGS:
+                     print_err(&quot;The tag '{}' in `{}` is deprecated and will stop working in the future&quot;.format(tag, char_file_path))
+</failure>
+			<system-out>                    continue</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="206" name="Mutant #110">
+			<system-out>                if tag in DEPRECATED_TAGS:</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="207" name="Mutant #111">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -205,7 +205,7 @@
+                     continue
+ 
+                 if tag in DEPRECATED_TAGS:
+-                    print_err(&quot;The tag '{}' in `{}` is deprecated and will stop working in the future&quot;.format(tag, char_file_path))
++                    print_err(&quot;XXThe tag '{}' in `{}` is deprecated and will stop working in the futureXX&quot;.format(tag, char_file_path))
+ 
+                 parsed_char.tags(tag).append(value)
+             else:
+</failure>
+			<system-out>                    print_err(&quot;The tag '{}' in `{}` is deprecated and will stop working in the future&quot;.format(tag, char_file_path))</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="212" name="Mutant #112">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -210,7 +210,7 @@
+                 parsed_char.tags(tag).append(value)
+             else:
+                 # Ignore second empty description line in a row
+-                if line == &quot;\n&quot;:
++                if line != &quot;\n&quot;:
+                     if previous_line_empty:
+                         continue
+                     else:
+</failure>
+			<system-out>                if line == &quot;\n&quot;:</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="212" name="Mutant #113">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -210,7 +210,7 @@
+                 parsed_char.tags(tag).append(value)
+             else:
+                 # Ignore second empty description line in a row
+-                if line == &quot;\n&quot;:
++                if line == &quot;XX\nXX&quot;:
+                     if previous_line_empty:
+                         continue
+                     else:
+</failure>
+			<system-out>                if line == &quot;\n&quot;:</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="214" name="Mutant #114">
+			<system-out>                        continue</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="216" name="Mutant #115">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -214,7 +214,7 @@
+                     if previous_line_empty:
+                         continue
+                     else:
+-                        previous_line_empty = True
++                        previous_line_empty = False
+                 else:
+                     previous_line_empty = False
+ 
+</failure>
+			<system-out>                        previous_line_empty = True</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="216" name="Mutant #116">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -214,7 +214,7 @@
+                     if previous_line_empty:
+                         continue
+                     else:
+-                        previous_line_empty = True
++                        previous_line_empty = None
+                 else:
+                     previous_line_empty = False
+ 
+</failure>
+			<system-out>                        previous_line_empty = True</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="218" name="Mutant #117">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -216,7 +216,7 @@
+                     else:
+                         previous_line_empty = True
+                 else:
+-                    previous_line_empty = False
++                    previous_line_empty = True
+ 
+                 # all remaining text goes in the description
+                 parsed_char.tags('description').append(line.strip())
+</failure>
+			<system-out>                    previous_line_empty = False</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="218" name="Mutant #118">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -216,7 +216,7 @@
+                     else:
+                         previous_line_empty = True
+                 else:
+-                    previous_line_empty = False
++                    previous_line_empty = None
+ 
+                 # all remaining text goes in the description
+                 parsed_char.tags('description').append(line.strip())
+</failure>
+			<system-out>                    previous_line_empty = False</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="221" name="Mutant #119">
+			<failure message="bad_survived" type="failure">--- npc/parser.py
++++ npc/parser.py
+@@ -219,7 +219,7 @@
+                     previous_line_empty = False
+ 
+                 # all remaining text goes in the description
+-                parsed_char.tags('description').append(line.strip())
++                parsed_char.tags('XXdescriptionXX').append(line.strip())
+                 continue
+ 
+     return character.build(other_char=parsed_char)
+</failure>
+			<system-out>                parsed_char.tags('description').append(line.strip())</system-out>
+		</testcase>
+		<testcase file="npc/parser.py" line="222" name="Mutant #120">
+			<system-out>                continue</system-out>
+		</testcase>
+	</testsuite>
+</testsuites>
+
